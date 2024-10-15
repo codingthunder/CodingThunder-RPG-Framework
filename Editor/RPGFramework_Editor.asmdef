@@ -1,0 +1,16 @@
+{
+    "name": "RPGFramework_Editor",
+    "rootNamespace": "CodingThunder",
+    "references": [
+        "GUID:11c5599e07be0904e8779671cbd530b4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

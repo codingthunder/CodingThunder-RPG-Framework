@@ -1,0 +1,16 @@
+{
+  "name": "com.codingthunder.rpgframework",
+  "version": "0.1.0",
+  "displayName": "Coding Thunder RPG Framework",
+  "description": "An RPG Framework with a focus on story-driven game control and data-driven flexibility.",
+  "unity": "2022.3",
+  "author": {
+    "name": "J.C. Chambers III",
+    "email": "codingthunder@gmail.com"
+  },
+  "dependencies": {
+    "com.github-glitchenzo.nugetforunity": "",
+    "com.unity.textmeshpro": "",
+    "com.inkle.ink-unity-integration": "1.2.1"
+  }
+}
