@@ -3,6 +3,7 @@ using CodingThunder.RPGUtilities.DataManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -24,10 +25,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 			var gameDataKey = Parameters["Key"];
 			var target = Parameters["Target"];
 			var targetTypeString = Parameters["Type"];
+			Type type = Type.GetType(targetTypeString);
+
+			Debug.LogWarning($"Persisting data to key: {gameDataKey}, target: {target}, typeString: {targetTypeString}, type: {type.FullName}");
 
 			var targetInstance = LookupResolver.Instance.Resolve(target, Type.GetType(targetTypeString));
 
-			GameDataManager.Instance.RegisterData(gameDataKey, target);
+			GameDataManager.Instance.RegisterData(gameDataKey, targetInstance);
 
 			completionCallback.Invoke(this);
 			yield break;

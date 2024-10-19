@@ -48,6 +48,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 			if (condition != null && !condition.Value)
 			{
 				Debug.Log($"CmdSequence condition was not met. Cancelling. No completionCallback. Do not pass go.");
+				//TODO: Possibly add a cancellation Callback.
+				completionCallback.Invoke(this);
 				yield break;
 			}
 

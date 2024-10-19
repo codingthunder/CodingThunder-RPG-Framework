@@ -4,7 +4,7 @@ The CTRPGF is an RPG Framework with a focus on story-driven game control and dat
 Right now, the Framework is still in very, very early development. It's going to have plenty of bugs, and it will be some time before it's considered feature-complete. But I wanted to get the ball rolling on it and let people take a crack at it if they want to.
 
 > [!IMPORTANT]
-> This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the engine, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
+> This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the framework, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
 
 # Core Features
 The Framework is built around two pillars: Cmds, and RPGRefs

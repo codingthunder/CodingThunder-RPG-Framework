@@ -10,13 +10,13 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		{
 			if (!reference.Contains(','))
 			{
-				return DynamicExpressoEvaluator.Instance.EvaluateExpression(reference, labelValues);
+				return DynamicExpressoEvaluator.Instance.EvaluateExpression(reference, labelValues, typeof(Vector2));
 			}
 
 			var xy = reference.Split(',');
 
 			var strippedXString = xy[0].Substring(1).Trim();
-			var strippedYString = xy[1].Substring(1, xy[1].Length - 1).Trim();
+			var strippedYString = xy[1].Substring(1, xy[1].Length - 2).Trim();
 
 			Debug.Log($"Resolving vector2 from string with x {strippedXString} and y {strippedYString}");
 

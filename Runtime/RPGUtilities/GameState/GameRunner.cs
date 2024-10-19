@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodingThunder.RPGUtilities.GameState
 {
@@ -27,6 +28,7 @@ namespace CodingThunder.RPGUtilities.GameState
 
 
 		[SerializeField]
+		[Header("Will skip game load.")]
 		private string skipToSceneOnStart;
 		public GameStateEnum GameState { get; private set; }
 		public event Action<GameStateEnum> OnChangeGameState;
@@ -59,10 +61,50 @@ namespace CodingThunder.RPGUtilities.GameState
 
 			OnChangeGameState += ChangeGameState;
 
+			SaveLoad.RegisterSaveLoadCallbacks("Metadata", SaveGameMetadata, LoadGameMetadata);
+
 			RegisterNamespacesAndClasses();
 		}
 
-		private void RegisterNamespacesAndClasses()
+		private object SaveGameMetadata()
+		{
+			Dictionary<string, object> metadata = new()
+            {
+                { "GameState", GameState },
+                { "GameScene", SceneManager.GetActiveScene().name }
+            };
+
+			return metadata;
+		}
+
+
+		private void LoadGameMetadata(object data)
+		{
+			var metadata = data as Dictionary<string, object>;
+			int gameStateInt = Convert.ToInt32( metadata["GameState"]);
+			GameState = (GameStateEnum)gameStateInt;
+			//GameState = (GameStateEnum) (int) metadata["GameState"];
+			var sceneName = (string)metadata["GameScene"];
+
+            SceneManager.sceneLoaded += OnSceneLoadFromMetadata;
+
+            SceneManager.LoadScene(sceneName);
+		}
+
+        //This is structured so that it should only ever be called if a scene is loaded as part of Loading a Game from disk.
+        //In most cases, handing off control to the storyRunner is managed elsewhere. But in this case, it is necessary to be explicit here.
+        private void OnSceneLoadFromMetadata(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoadFromMetadata;
+            if (GameState == GameStateEnum.CUTSCENE)
+            {
+                storyRunner.Next();
+            }
+            //Uhhh... handle other states here as necessary. 
+
+        }
+
+        private void RegisterNamespacesAndClasses()
 		{
 			foreach(var ns in registeredNamespaces)
 			{
@@ -118,16 +160,13 @@ namespace CodingThunder.RPGUtilities.GameState
 		{
 			OnChangeGameState?.Invoke(GameStateEnum.LOADING);
 			SaveLoad.LoadGame(saveName);
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
-			storyRunner.Next();
+			//OnChangeGameState?.Invoke(GameState);
+			//storyRunner.Next();
 		}
 
 		public void SaveGame(string saveName)
 		{
-            OnChangeGameState?.Invoke(GameStateEnum.LOADING);
             SaveLoad.SaveGame(saveName);
-            OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
-            storyRunner.Next();
         }
 
 		public void PauseGame()
@@ -143,6 +182,7 @@ namespace CodingThunder.RPGUtilities.GameState
 		private void OnDestroy()
 		{
 			OnChangeGameState -= ChangeGameState;
+			SaveLoad.DeregisterSaveLoadCallbacks("Metadata");
 		}
 	}
 }

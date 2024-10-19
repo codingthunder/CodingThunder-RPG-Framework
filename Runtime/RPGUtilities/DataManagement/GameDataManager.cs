@@ -79,7 +79,9 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			//	lookupList.RemoveAt(lookupList.Count - 1);
 			//}
 
-			Debug.LogError($"Unable to find key {string.Join('.', idChain)} or any of its subkeys in GameData. GameData itself is not returnable.");
+			Debug.Log($"Key {string.Join('.', idChain)} not found in GameData. If data is expected, be sure to set it first. Returning null.");
+
+			//Debug.LogError($"Unable to find key {string.Join('.', idChain)} or any of its subkeys in GameData. GameData itself is not returnable.");
 			return null;
 
 		}
@@ -96,6 +98,7 @@ namespace CodingThunder.RPGUtilities.DataManagement
 				Debug.LogError("Cannot Register Data with an empty key.");
 			}
 			GameData[key] = data;
+			Debug.LogWarning($"Registering data to key {key} with data type: {data.GetType().Name}");
 		}
 
 		/// <summary>

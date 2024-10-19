@@ -60,6 +60,11 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		{
 			var value = Resolve(reference, typeof(T));
 
+			if (value == null)
+			{
+				return default;
+			}
+
 			if (typeof(T).IsAssignableFrom(value.GetType()))
 			{
 				return (T)value;
@@ -93,15 +98,13 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			{
 				return resolver.Invoke(reference, labelValues);
 			}
-			
-
 
 			//foreach (var pair in labelValues)
 			//{
 			//	reference = reference.Replace("$$" + pair.Key, Stringify(pair.Value));
 			//}
 
-			return DynamicExpressoEvaluator.Instance.EvaluateExpression(reference,labelValues);
+			return DynamicExpressoEvaluator.Instance.EvaluateExpression(reference,labelValues, typeForT);
 		}
 
 		private static object GetDefaultValue(Type typeForT)
@@ -162,8 +165,8 @@ namespace CodingThunder.RPGUtilities.DataManagement
 				var target = kw_resolver.Invoke(idChain);
 				if (target == null)
 				{
-					UnityEngine.Debug.LogError($"LookupCompleteLabel failed. Be sure {label} starts with a root keyword. " +
-						$"Also, be sure to register your rootKeywordResolver.");
+					//UnityEngine.Debug.LogError($"LookupCompleteLabel failed. Be sure {label} starts with a root keyword. " +
+					//	$"Also, be sure to register your rootKeywordResolver.");
 					return null;
 				}
 
@@ -175,7 +178,7 @@ namespace CodingThunder.RPGUtilities.DataManagement
 				return LookupPartialLabel(string.Join('.', idChain), target);
 			}
 
-			return DynamicExpressoEvaluator.Instance.EvaluateExpression(label, new());
+			return DynamicExpressoEvaluator.Instance.EvaluateExpression(label, new(),typeof(object));
 		}
 
 		public object LookupPartialLabel(string lookupId, object target)

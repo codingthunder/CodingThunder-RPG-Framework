@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using CodingThunder.RPGUtilities.Mechanics;
+using System.Text.RegularExpressions;
 
 namespace CodingThunder.RPGUtilities.DataManagement
 {
@@ -101,31 +102,61 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			}
 		}
 
-		public object EvaluateExpression(string expression, Dictionary<string,object> labelValues)
+		public object EvaluateExpression(string expression, Dictionary<string,object> labelValues, Type argumentType)
 		{
 			if (string.IsNullOrWhiteSpace(expression))
 			{
 				return null;
 			}
-
 			var keys = labelValues.Keys.ToArray();
 
 			for (int i = 0; i < labelValues.Count; i++)
 			{
 				string key = keys[i];
+                var value = labelValues[key];
+
+				//var replacementExpression = value == null ? $"(({argumentType.FullName}) __{i})" : $"__{i}";
+
+				//            expression = expression.Replace(key, replacementExpression);
+
 				expression = expression.Replace(key, $"__{i}");
 
-				_interpreter.SetVariable($"__{i}", labelValues[key]);
+				//Putting this here to try to get around the fact that DynamicExpresso doesn't like comparing null with bool.
+				//if (value == null)
+				//{
+				//	expression = Regex.Replace(expression, $@"!\s*__{i}", "!false");
+
+				//	// Replace "null" cases for safe handling in the expression
+				//	expression = Regex.Replace(expression, $@"__{i}\s*==\s*true", $"false == true");
+				//	expression = Regex.Replace(expression, $@"__{i}\s*!=\s*true", $"false != true");
+				//	expression = Regex.Replace(expression, $@"__{i}\s*==\s*false", $"false == false");
+				//	expression = Regex.Replace(expression, $@"__{i}\s*!=\s*false", $"false == false");
+
+				//	expression = Regex.Replace(expression, $@"true\s*==\s*__{i}", $"true == false");
+				//	expression = Regex.Replace(expression, $@"true\s*!=\s*__{i}", $"true != false");
+				//	expression = Regex.Replace(expression, $@"false\s*==\s*__{i}", $"false == false");
+				//	expression = Regex.Replace(expression, $@"false\s*!=\s*__{i}", $"false != false");
+
+				//}
+
+				Type valueType = argumentType;
+
+				if (value != null)
+				{
+					valueType = value.GetType();
+				}
+
+                _interpreter.SetVariable($"__{i}", value, valueType);
 			}
 
 
 			try
 			{
-				return _interpreter.Eval(expression);
+				return _interpreter.Eval(expression, argumentType);
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Dynamic Expresso Evaluation Error: {ex.Message}");
+				Debug.LogError($"Dynamic Expresso for expression: {expression}\n\t Evaluation Error: {ex.Message}");
 				return null;
 			}
 		}
