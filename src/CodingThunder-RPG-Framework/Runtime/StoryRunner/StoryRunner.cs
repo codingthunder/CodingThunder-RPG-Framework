@@ -23,7 +23,7 @@ public class StoryRunner : MonoBehaviour
     void Awake()
 	{
 		inkWrapper = new InKrapper(inkAsset.text, ReceiveNextLineFromInk, ReceiveChoicesFromInk, ReceiveEndSceneFromInk);
-		DontDestroyOnLoad(storyUI.gameObject);
+		//DontDestroyOnLoad(storyUI.gameObject);
 
 		SaveLoad.RegisterSaveLoadCallbacks("Story", GenerateStorySaveData, LoadStorySaveData);
 		LookupResolver.Instance.RegisterRootKeyword("Story", LookupStoryVariable);
