@@ -6,6 +6,13 @@ Right now, the Framework is still in very, very early development. It's going to
 > [!IMPORTANT]
 > This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the framework, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
 
+# How to Use
+Going to add more detail to this soon, but for now, the easiest way to get the Framework running on your project is to add the following to your packages manifest:
+
+> "com.codingthunder.rpgframework": "https://github.com/codingthunder/CodingThunder-RPG-Framework.git?path=/src/CodingThunder-RPG-Framework"
+
+After that, well, I'm working on getting a how-to guide up and running. I made an example, but it uses some assets I don't have the rights to, so I'm going to try making a different example soon.
+
 # Core Features
 The Framework is built around two pillars: Cmds, and RPGRefs
 
