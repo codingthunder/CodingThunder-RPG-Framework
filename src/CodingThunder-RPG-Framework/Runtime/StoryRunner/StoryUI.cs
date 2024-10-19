@@ -24,7 +24,9 @@ public class StoryUI : MonoBehaviour
 
 	private void Awake()
 	{
-		DontDestroyOnLoad(transform.parent);
+		//DontDestroyOnLoad(transform.parent);
+
+        //TODO: This feels hackish. There has to be a better way to handle this.
         DontDestroyOnLoad(EventSystem.current);
 	}
 
