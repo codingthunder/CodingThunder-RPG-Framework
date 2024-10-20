@@ -9,8 +9,8 @@
     "email": "codingthunder@gmail.com"
   },
   "dependencies": {
-    "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git#v4.1.1",
+    "com.github-glitchenzo.nugetforunity": "4.1.1",
     "com.unity.textmeshpro": "3.0.6",
-    "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#1.2.1"
+    "com.inkle.ink-unity-integration": "1.2.1"
   }
 }
