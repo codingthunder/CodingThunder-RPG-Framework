@@ -7,10 +7,33 @@ Right now, the Framework is still in very, very early development. It's going to
 > This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the framework, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
 
 # How to Use
-Going to add more detail to this soon, but for now, the easiest way to get the Framework running on your project is to add the following to your packages manifest:
+## Installing the Framework
+At the moment, this is the easiest way I know how to do this. It's annoying, but Unity really dislikes including Git dependencies inside of package manifests. So here's what you do first. Either install the following dependencies via the manifest.json for your project, or use the Unity Package Manager. We do these first to avoid dependency problems.
 
-> "com.codingthunder.rpgframework": "https://github.com/codingthunder/CodingThunder-RPG-Framework.git?path=/src/CodingThunder-RPG-Framework"
+> "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",<br>
+> "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#upm",<br>
 
+After that's done, do the same thing for the RPG Framework (alternatively, you can always just download the framework as a Zip file and insert it into your Assets, especially if you plan to make changes to the code):
+
+> "com.codingthunder.rpgframework": "https://github.com/codingthunder/CodingThunder-RPG-Framework.git?path=/src/CodingThunder-RPG-Framework",
+
+You're going to see some errors. That's normal. NuGetForUnity integrates NuGet (C# .NET's Package Manager) into your Unity project (making libraries such as NewtonSoft.Json available for use, yay).
+
+Go to Packages/CodingThunder-RPG-Framework/Config (inside the Unity editor), and copy the two config files in there.
+
+![Config Files screenshot](/docs/images/nuget_config_files.png)
+
+Then go to your Assets folder (again, in Unity). Delete the two matching NuGet config files and paste in the ones you copied.
+
+![Screenshot of Config Files in Assets](/docs/images/nuget_configs_in_Assets.png)
+
+Finally, select NuGet from the top menu in Unity, and then select "Restore Packages." There may be a few curl errors, but after a moment, it should successfully install the appropriate NuGet packages.
+
+![Screenshot of menu option to resture nuget packages](/docs/images/restore_nuget_packages.png)
+
+Once all of that is finished, your project should be ready to start working.
+
+## Starting a New Project
 After that, well, I'm working on getting a how-to guide up and running. I made an example, but it uses some assets I don't have the rights to, so I'm going to try making a different example soon.
 
 # Core Features
