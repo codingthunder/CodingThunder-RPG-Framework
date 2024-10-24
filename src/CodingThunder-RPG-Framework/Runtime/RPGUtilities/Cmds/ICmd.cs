@@ -10,6 +10,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public string ID { get; set; }
 		public Dictionary<string, string> Parameters { get; set; }
 		public object ReturnValue { get; set; }
+
+		public bool Suspended { get; set; }
 		
 		IEnumerator ExecuteCmd(Action<ICmd> completionCallback);
 	}

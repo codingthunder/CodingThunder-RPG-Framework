@@ -31,6 +31,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public List<CmdExpression> cmdExpressions;
 		private int stepCount;
 
+		private bool suspended = false;
+		private HashSet<ICmd> activeCmds = new HashSet<ICmd>();
+
 		public Dictionary<string, object> localArgs = new Dictionary<string, object>();
 
 		public void AddCmds(List<string> cmds)
@@ -42,6 +45,17 @@ namespace CodingThunder.RPGUtilities.Cmds
 		{
 			cmdExpressions.Clear();
 		}
+
+		public void SetIsSuspended(bool isSuspended)
+		{
+			suspended = isSuspended;
+
+			foreach(var cmd in activeCmds)
+			{
+				cmd.Suspended = isSuspended;
+			}
+		}
+
 
 		public IEnumerator ExecuteCmdSequence(MonoBehaviour cmdRunner, Action<CmdSequence> completionCallback)
 		{
@@ -57,6 +71,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 			Debug.Log($"Repeat: {repeat}");
 			Debug.Log($"ExpressionCount: {cmdExpressions.Count}");
 
+			while (suspended)
+			{
+				yield return null;
+			}
+
 			while (repeat != 0)
 			{
 
@@ -71,14 +90,30 @@ namespace CodingThunder.RPGUtilities.Cmds
 						cmdExpression.expression = cmdExpression.expression.Replace("$$" + arg.Key, LookupResolver.Instance.Stringify(arg.Value));
 					}
 
-					if (delay > 0f)
+					var timeDelayed = 0f;
+
+					while (delay > 0f && timeDelayed < delay)
 					{
-						yield return new WaitForSeconds(delay);
+						yield return null;
+
+                        if (suspended)
+						{
+							continue;
+						}
+
+						timeDelayed += Time.deltaTime;
 					}
+
+					//if (delay > 0f)
+					//{
+					//	yield return new WaitForSeconds(delay);
+					//}
 					var stepNumber = stepCount;
 
 					var cmd = cmdExpression.ToCmd();
 					cmd.ID = stepNumber.ToString();
+
+					activeCmds.Add(cmd);
 
 					var cmdCoroutine = cmdRunner.StartCoroutine(cmd.ExecuteCmd(Step));
 
@@ -98,6 +133,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 			//	localArgs["_"] = value;
 			//	localArgs[finishedCmd.ID] = value;
 			//}
+
+			activeCmds.Remove(finishedCmd);
 
 			if (finishedCmd.ReturnValue != null)
 			{

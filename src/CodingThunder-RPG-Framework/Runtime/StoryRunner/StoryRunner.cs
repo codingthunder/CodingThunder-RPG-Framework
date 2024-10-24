@@ -152,6 +152,7 @@ public class StoryRunner : MonoBehaviour
 			if (speaker.ToLower() == "prompt")
 			{
 				this._prompt = narration;
+				speaker = null;
 			}
 		}
 

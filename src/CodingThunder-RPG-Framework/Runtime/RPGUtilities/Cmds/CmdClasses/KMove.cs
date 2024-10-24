@@ -21,8 +21,15 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public Dictionary<string, string> Parameters { get; set; }
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
+
 			GameObject target = new RPGRef<GameObject> { ReferenceId = Parameters["Target"] };
 			float x = new RPGRef<float> { ReferenceId = Parameters["X"] };
 			float y = new RPGRef<float> { ReferenceId = Parameters["Y"] };
@@ -46,6 +53,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 			while (distTraveled < dist)
 			{
+				while (Suspended)
+				{
+					yield return null;
+				}
+
 				var timeSinceLastUpdate = 0f;
 				if (rb != null)
 				{

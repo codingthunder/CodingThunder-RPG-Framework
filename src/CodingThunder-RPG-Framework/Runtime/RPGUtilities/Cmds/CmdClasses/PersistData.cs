@@ -13,6 +13,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public Dictionary<string, string> Parameters { get; set; }
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		/// <summary>
 		/// To set persisted Key, use Parameters["Key"]
 		/// To select the data to be persisted, use Parameters["Target"]
@@ -22,6 +24,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <returns></returns>
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
+
 			var gameDataKey = Parameters["Key"];
 			var target = Parameters["Target"];
 			var targetTypeString = Parameters["Type"];

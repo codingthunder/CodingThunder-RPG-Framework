@@ -16,9 +16,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
-
+			while (Suspended)
+			{
+				yield return null;
+			}
 			SceneManager.LoadScene(Parameters["Scene"].Trim());
 			//SceneManager.LoadScene(1);
 			completionCallback.Invoke(this);

@@ -20,8 +20,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> OnFinishCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
 
 			var sourceString = Parameters["Source"];
 

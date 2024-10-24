@@ -1,5 +1,6 @@
 using CodingThunder.RPGUtilities.Cmds;
 using CodingThunder.RPGUtilities.DataManagement;
+using CodingThunder.RPGUtilities.GameState;
 using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Triggers
@@ -36,5 +37,12 @@ namespace CodingThunder.RPGUtilities.Triggers
 		{
 			sequenceInProgress = false;
 		}
-	}
+
+        protected override void HandleGameStateChange(GameStateEnum state)
+        {
+            base.HandleGameStateChange(state);
+
+			triggerSequence.SetIsSuspended(!IsActive);
+        }
+    }
 }

@@ -17,8 +17,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
 			string storySceneId = new RPGRef<string>() { ReferenceId = Parameters["Scene"] };
 
 			GameRunner.Instance.StartCutscene(storySceneId);

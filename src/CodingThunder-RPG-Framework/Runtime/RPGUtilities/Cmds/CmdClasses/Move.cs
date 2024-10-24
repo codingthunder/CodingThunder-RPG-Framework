@@ -21,8 +21,15 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
+
 			GameObject target = new RPGRef<GameObject>() { ReferenceId = Parameters["Target"] };
 			float xDir = new RPGRef<float>() { ReferenceId = Parameters["X"] };
 			float yDir = new RPGRef<float>() { ReferenceId = Parameters["Y"] };
@@ -47,7 +54,19 @@ namespace CodingThunder.RPGUtilities.Cmds
 			
 			if (dur > 0)
 			{
-				yield return new WaitForSeconds(dur);
+				var timePast = 0f;
+
+				while (timePast < dur)
+				{
+					yield return null;
+					if (Suspended)
+					{
+						continue;
+					}
+					timePast += Time.deltaTime;
+				}
+				//The while loop above basically does this, but also allows for Suspension.
+				//yield return new WaitForSeconds(dur);
 				movement2D.m_direction = new Vector2 (0f, 0f);
 				movement2D.m_speed = existing_speed;
 				completionCallback.Invoke(this);
@@ -61,6 +80,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 				while (framesPast < frameDur)
 				{
 					yield return null;
+					if (Suspended) { continue; }
 					framesPast++;
 				}
 				movement2D.m_direction = new Vector2(0f, 0f);

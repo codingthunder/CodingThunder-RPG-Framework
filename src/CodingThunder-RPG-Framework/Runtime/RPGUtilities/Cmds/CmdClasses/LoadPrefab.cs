@@ -24,8 +24,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
 			string prefabId = new RPGRef<string>() { ReferenceId = Parameters["Target"] };
 			Vector2 position = new Vector2();
 			bool enabled = false;

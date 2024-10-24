@@ -12,6 +12,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public Dictionary<string, string> Parameters { get; set; }
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		/// <summary>
 		/// To set persisted Key, use Parameters["Key"]
 		/// To set the reference, use Parameters["Reference"]
@@ -21,6 +23,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <exception cref="NotImplementedException"></exception>
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
+			while (Suspended)
+			{
+				yield return null;
+			}
+
 			var gameDataKey = Parameters["Key"];
 			var reference = Parameters["Reference"];
 

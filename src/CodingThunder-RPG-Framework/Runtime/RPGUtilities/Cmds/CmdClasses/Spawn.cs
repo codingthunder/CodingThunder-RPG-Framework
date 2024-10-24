@@ -17,9 +17,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public Dictionary<string, string> Parameters { get; set; }
 		public object ReturnValue { get; set; }
 
+		public bool Suspended { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
-
+			while (Suspended)
+			{
+				yield return null;
+			}
 			var tarString = Parameters["Target"];
 
 			if (!tarString.StartsWith("$$Scene."))
