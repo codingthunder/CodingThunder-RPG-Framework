@@ -24,20 +24,20 @@ The following are necessary to achieve what I consider to be "version 1.0."
 - [x] Parsable Cmd System
 - [x] Expression-driven Data Management
 - [x] Story-driven Game Flow
-- [] Semi-automated Documentation (includes adjusting Cmds to make them easier to work with)
-- [] Unit Tests (seriously, though, these will make programming Cmds a million times easier)
-- [] Stat-Driven RPG Mechanics
-- [] QUESTS!
-- [] Basic Stat-Driven Combat
-- [] Basic Audio Implementation
-- [] Proper Unity Package Support
+- [ ] Semi-automated Documentation (includes adjusting Cmds to make them easier to work with)
+- [ ] Unit Tests (seriously, though, these will make programming Cmds a million times easier)
+- [ ] Stat-Driven RPG Mechanics
+- [ ] QUESTS!
+- [ ] Basic Stat-Driven Combat
+- [ ] Basic Audio Implementation
+- [ ] Proper Unity Package Support
 
 After that, well, there are a lot of possibilities. Here are a few I have in mind. Feel free to make suggestions!
 
-- [] Quality-of-life Animation & UI improvements
-- [] Advanced Combat Mechanics
-- [] Cmd & Expression Linting
-- [] Multi-platform support & Flexible Input Options
+- [ ] Quality-of-life Animation & UI improvements
+- [ ] Advanced Combat Mechanics
+- [ ] Cmd & Expression Linting
+- [ ] Multi-platform support & Flexible Input Options
 
 # How to Use
 ## Try out the Example Project
