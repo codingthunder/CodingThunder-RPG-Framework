@@ -73,15 +73,15 @@ You're going to see some errors. That's normal. NuGetForUnity integrates NuGet (
 
 Go to Packages/CodingThunder-RPG-Framework/Config (inside the Unity editor), and copy the two config files in there.
 
-![Config Files screenshot](/docs/images/nuget_config_files.png)
+![Config Files screenshot](/Docs/images/nuget_config_files.png)
 
 Then go to your Assets folder (again, in Unity). Delete the two matching NuGet config files and paste in the ones you copied.
 
-![Screenshot of Config Files in Assets](/docs/images/nuget_configs_in_Assets.png)
+![Screenshot of Config Files in Assets](/Docs/images/nuget_configs_in_Assets.png)
 
 Finally, select NuGet from the top menu in Unity, and then select "Restore Packages." There may be a few curl errors, but after a moment, it should successfully install the appropriate NuGet packages.
 
-![Screenshot of menu option to resture nuget packages](/docs/images/restore_nuget_packages.png)
+![Screenshot of menu option to resture nuget packages](/Docs/images/restore_nuget_packages.png)
 
 Once all of that is finished, your project should be ready to start working.
 
