@@ -1,4 +1,3 @@
-# TODO: DELETE EXTERNAL PLACEHOLDER ASSETS.
 # What is the Coding Thunder RPG Framework
 The CTRPGF is an RPG Framework with a focus on story-driven game control and data-driven flexibility. It emphasizes the ability to do game development with the tools best suited for the task, rather than doing everything inside the engine.
 
@@ -7,9 +6,61 @@ Right now, the Framework is still in very, very early development. It's going to
 > [!IMPORTANT]
 > This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the framework, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
 
+# Design Philosophy & Development Goals
+This Framework is built with users in mind who:
+1. Are not visually inclined.
+2. Who want to write story-driven games.
+
+The core tenet of the Framework is "Logic as Data."
+
+By treating incoming data (either from the story, or from other sources) as a logical expression instead of just a hard value, the Framework gives the people defining that data a lot of power. For story-writers, that means gaining the ability to manipulate the game scene directly from story script. For gameplay system designers, that means flexibility in how you define the stats for in-game objects, classes, etc.
+
+Some of that tenet is already apparent in this pre-alpha release, but I want to add more. Some features, such as Unit Tests, are simply necessary. Others are up for discussion. If you have any ideas for how the Framework can improve, let me know.
+
+With that in mind, here are the following features I hope to implement, in roughly the order I hope to implement them. This list can and will change as development continues.
+
+The following are necessary to achieve what I consider to be "version 1.0."
+
+- [x] Parsable Cmd System
+- [x] Expression-driven Data Management
+- [x] Story-driven Game Flow
+- [] Semi-automated Documentation
+- [] Unit Tests (seriously, though, these will make writing Cmds a million times easier)
+- [] Stat-Driven RPG Mechanics
+- [] QUESTS!
+- [] Basic Stat-Driven Combat
+- [] Basic Audio Implementation
+- [] Proper Unity Package Support
+
+After that, well, there are a lot of possibilities. Here are a few I have in mind. Feel free to make suggestions!
+
+- [] Quality-of-life Animation & UI improvements
+- [] Advanced Combat Mechanics
+- [] Cmd & Expression Linting
+- [] Multi-platform support & Flexible Input Options
+
 # How to Use
-## Installing the Framework
-At the moment, this is the easiest way I know how to do this. It's annoying, but Unity really dislikes including Git dependencies inside of package manifests. So here's what you do first. Either install the following dependencies via the manifest.json for your project, or use the Unity Package Manager. We do these first to avoid dependency problems.
+## Try out the Example Project
+So, you technically CAN install the framework as a Unity Package, and long-term, I kind of hope to make that the default option. However, at the moment, getting it working is a pain in the ass.
+
+Before putting in too much work to use the Framework, I **strongly** encourage you to look at the Example Project and see how I do things. Much of the Framework at the moment is convention, not code. And while I hope to incorporate more hard-coded elements, certain things are just, "This is how I did it."
+
+### Running the Example Project
+Clone the repo or download it as a zip and unpack it. In File Explorer, go to the directory "examples/BasicExample/Packages/com.codingthunder.rpgframework/". In another window, go to the directory "src/CodingThunder-RPG-Framework/". Copy the contents of CodingThunder-RPG-Framework into com.codingthunder.rpgframework. THEN you can open the project in Unity.
+
+You should be able to run the example from the MainMenu scene. Alternatively, I'll probably make a build of the example available on Itch or something. As a developer, you should be most interested in the ExampleStory Ink Script and the ExampleScene in Unity.
+
+If you want to see how Cmds work, feel free to poke around in the Package folder.
+
+### Developing Features
+If you want to actually develop the Framework's code, I suggest replacing the com.codingthunder.rpgframework directory with a SymLink junction on windows. For other OS's, you're on your own.
+
+Documentation is kind of scarce at the moment. That's literally the next thing on my list. I explain Cmds and RPGRefs a bit down below, and I tried to do a decent job of including documentation in the code itself, but it is NOT thorough or consistent at the moment. 
+
+## Installing the Framework as a Package
+If you don't want to run the example project and instead want to include the Framework in a project of your own, this is probably the easiest way to do it. It's annoying, but Unity really dislikes including Git dependencies inside of package manifests.
+
+So here's what you do first: Either install the following dependencies via the manifest.json for your project, or use the Unity Package Manager. We do these first to avoid dependency problems.
 
 > "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",<br>
 > "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#upm",<br>
