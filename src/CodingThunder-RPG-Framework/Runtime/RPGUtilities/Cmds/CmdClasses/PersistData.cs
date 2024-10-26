@@ -24,7 +24,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		/// <summary>
 		/// To set persisted Key, use Parameters["Key"]
-		/// To select the data to be persisted, use Parameters["Target"]
+		/// To select the data to be persisted, use Parameters["Position"]
 		/// To set the type for the persisted data, use Parameters["Type"]
 		/// </summary>
 		/// <param name="completionCallback"></param>

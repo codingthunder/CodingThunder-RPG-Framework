@@ -12,7 +12,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Sets the ReturnValue to whatever you are getting. If called from Ink, will set the appropriate global variable.
 	/// See Ink's Utilities/Initialization.ink.
-	/// Set target object with Parameters["Target"]
+	/// Set target object with Parameters["Position"]
 	/// Set target Type with Parameters["Type"]
 	/// </summary>
 	public class GetVar : ICmd

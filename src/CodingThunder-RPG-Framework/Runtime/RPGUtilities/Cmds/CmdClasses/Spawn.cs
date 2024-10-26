@@ -10,7 +10,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Will not instantiate an object. Only sets it to active.
 	/// Considering deprecation. May be redundant.
-	/// To set target, set Parameters["Target"]
+	/// To set target, set Parameters["Position"]
 	/// </summary>
 	public class Spawn : ICmd
 	{

@@ -23,9 +23,9 @@ namespace CodingThunder.RPGUtilities.GameState
 	{
 		public static GameRunner Instance { get; private set; }
 
-		private GameDataManager gameDataManager;
-		private SceneDataManager sceneDataManager;
-		private StoryRunner storyRunner;
+		public GameDataManager gameDataManager;
+		public SceneDataManager sceneDataManager;
+		public StoryRunner storyRunner;
 
 		public bool debugMode;
 
@@ -61,9 +61,9 @@ namespace CodingThunder.RPGUtilities.GameState
 
 			DontDestroyOnLoad(gameObject);
 
-			gameDataManager = GetComponent<GameDataManager>();
-			sceneDataManager = GetComponent<SceneDataManager>();
-			storyRunner = GetComponent<StoryRunner>();
+			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
+			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();
+			if (storyRunner == null) storyRunner = GetComponent<StoryRunner>();
 
 			OnChangeGameState += ChangeGameState;
 

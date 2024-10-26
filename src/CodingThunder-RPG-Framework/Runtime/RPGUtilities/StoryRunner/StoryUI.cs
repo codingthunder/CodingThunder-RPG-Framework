@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using System;
 using UnityEngine.EventSystems;
+using CodingThunder.RPGUtilities.GameState;
 
 namespace CodingThunder.RPGUtilities.RPGStory
 {
@@ -127,6 +128,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
             if (auto)
             {
                 yield return new WaitForSecondsRealtime(waitTimeOnAuto);
+                GameRunner.Instance.storyRunner.Next();
                 yield break;
             }
 

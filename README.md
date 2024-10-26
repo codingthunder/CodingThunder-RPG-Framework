@@ -146,3 +146,4 @@ So, you use Custom Parsers for data types that aren't supported by DynamicExpres
 ### Final Notes on RPGRefs
 It's worth noting that RPGRefs will almost always be slower to resolve than using a Data Type's built-in parser (if it has one), especially if you have a complex expression for your ReferenceId. Always keep that in mind when you're balancing your game code's speed. It may be that you DON'T want to support expressions for certain data fields in your logic or stats, especially if you're running this logic every frame. Be judicious in how you use RPGRefs.
 
+TODO: Set up RPGRefs so that they automatically put quotation marks around strings when When trying to parse something to a string with DynamicExpresso.

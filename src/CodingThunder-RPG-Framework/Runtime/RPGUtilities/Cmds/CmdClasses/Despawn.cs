@@ -9,7 +9,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
 	/// Remove a GameObject. Disables the object, doesn't destroy it.
-	/// To set target, set Parameters["Target"]
+	/// To set target, set Parameters["Position"]
 	/// </summary>
 	public class Despawn : ICmd
 	{
