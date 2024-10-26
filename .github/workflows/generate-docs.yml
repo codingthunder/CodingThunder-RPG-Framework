@@ -1,7 +1,9 @@
 name: Docs Only Build
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+        - making-docs
 
 jobs:
   build-docs:
