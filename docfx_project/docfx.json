@@ -1,0 +1,29 @@
+{
+    "metadata": [
+      {
+        "src": [
+          {
+            "files": [
+              "../src/**/*.cs"
+            ]
+          }
+        ],
+        "dest": "api"
+      }
+    ],
+    "build": {
+      "content": [
+        {
+          "files": [
+            "api/**.yml",
+            "toc.yml"
+          ]
+        }
+      ],
+      "dest": "site",
+      "template": [
+        "default"
+      ]
+    }
+  }
+  
