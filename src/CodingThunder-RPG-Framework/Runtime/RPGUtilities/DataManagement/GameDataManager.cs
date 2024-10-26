@@ -7,6 +7,13 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.DataManagement
 {
+	/// <summary>
+	/// TODO: I don't think this should be a Singleton. The only Singleton we probably need is the GameRunner itself.
+	/// 
+	/// GameDataManager manages persistent non-story data between scenes. It's usually easier to handle primitives and strings
+	/// inside of Ink itself, while more complex data objects should be managed here.
+	/// There are some rules to how it works that probably need to be defined.
+	/// </summary>
 	public class GameDataManager : MonoBehaviour
 	{
 		public static GameDataManager Instance;

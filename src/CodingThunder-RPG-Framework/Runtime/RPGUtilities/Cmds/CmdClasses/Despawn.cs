@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Remove a GameObject.
+	/// Remove a GameObject. Disables the object, doesn't destroy it.
 	/// To set target, set Parameters["Target"]
 	/// </summary>
 	public class Despawn : ICmd

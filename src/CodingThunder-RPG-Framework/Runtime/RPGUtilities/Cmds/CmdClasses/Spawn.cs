@@ -8,7 +8,8 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Remove a GameObject.
+	/// Will not instantiate an object. Only sets it to active.
+	/// Considering deprecation. May be redundant.
 	/// To set target, set Parameters["Target"]
 	/// </summary>
 	public class Spawn : ICmd

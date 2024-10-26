@@ -6,8 +6,9 @@ namespace CodingThunder.RPGUtilities.DataManagement
 {
 	//The reference's type shouldn't need to be serialized. That will be tracked and stored via its declaration.
 	/// <summary>
-	/// In most cases, an RPGRef<T> will be treated like it is a T. Assigning it will pretty much always
-	/// cast the object 
+	/// In most cases, an RPGRef<T> will be treated like it is a T. Upon assignment to a non-RPGRef,
+	/// it will resolve its ReferenceId, which is an expression, and will return an object which can be cast to type T.
+	/// Will likely change the name ReferenceId to Expression, since Expression is more accurate.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public class RPGRef<T>

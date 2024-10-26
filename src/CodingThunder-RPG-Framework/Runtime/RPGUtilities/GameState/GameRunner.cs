@@ -1,5 +1,6 @@
 using CodingThunder.RPGUtilities.DataManagement;
 using CodingThunder.RPGUtilities.SaveData;
+using CodingThunder.RPGUtilities.RPGStory;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,12 +10,12 @@ using UnityEngine.SceneManagement;
 namespace CodingThunder.RPGUtilities.GameState
 {
 
-	/// <summary>
-	/// Needs to be singleton. It's Highlander. THERE CAN BE ONLY ONE.
-	/// Responsible for connecting together all the different pieces.
-	/// </summary>
-	/// 
-	[RequireComponent(typeof(StoryRunner))]
+    /// <summary>
+    /// Needs to be singleton. It's Highlander. THERE CAN BE ONLY ONE.
+    /// Responsible for connecting together all the different pieces.
+    /// </summary>
+    /// 
+    [RequireComponent(typeof(StoryRunner))]
 	[RequireComponent(typeof(GameDataManager))]
 	[RequireComponent(typeof(SceneDataManager))]
 

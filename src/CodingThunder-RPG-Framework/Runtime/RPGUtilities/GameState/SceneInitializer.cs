@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Likely going to phase this class out as well. Most of what it does can be handled inside of Ink.
+/// Likely going to deprecate this class out as well. Most of what it does can be handled inside of Ink.
 /// </summary>
 public class SceneInitializer : GameStateManaged
 {

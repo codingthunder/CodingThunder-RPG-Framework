@@ -6,6 +6,11 @@ using System.Collections.Generic;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
+	/// <summary>
+	/// More pertinent for persisting data from Unity itself than from Ink.
+	/// Instead of storing the actual data, you're storing where the Data can be found.
+	/// To use it, you'll need to fetch this reference as a string, then use it as the Target in a GetVar.
+	/// </summary>
 	public class PersistReference : ICmd
 	{
 		public string ID { get; set; }

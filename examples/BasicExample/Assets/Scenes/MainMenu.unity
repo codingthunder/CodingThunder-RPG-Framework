@@ -653,6 +653,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameRunnerCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1198568817519767201, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 135.699
+      objectReference: {fileID: 0}
+    - target: {fileID: 1198568817519767201, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2363022191542259879, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -728,6 +736,14 @@ PrefabInstance:
     - target: {fileID: 4415158268207244031, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478900083321853700, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816581784632824994, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 6818534777652535139, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
       propertyPath: inkAsset

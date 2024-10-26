@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
+	/// <summary>
+	/// These are human-written Cmds. At runtime, they will be parsed into actual Cmds.
+	/// If at any point you are writing a Cmd out, whether in Ink or Unity's editor,
+	/// you're actually writing a CmdExpression.
+	/// CmdExpressions are usually only parsed right before the Cmd is Executed. This allows
+	/// classes that are running Cmds (such as Sequences) to pass data between Cmds.
+	/// </summary>
 	[Serializable]
 	#if UNITY_EDITOR
 		[UnityEditor.CustomPropertyDrawer(typeof(CmdExpression))]

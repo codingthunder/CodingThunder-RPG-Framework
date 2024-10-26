@@ -8,7 +8,8 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
     /// <summary>
-    /// uses the SimpleCameraFollow class on the main camera to have it follow the transform a target.
+    /// uses the SimpleCameraFollow component on the main camera to have it follow the transform of a target.
+    /// The Cmd itself is only active for a single frame. Will consider a longer-term Cmd for more complex Camera movments.
     /// Set Parameters["Target"] to the name of the gameObject (or a referenceId of it).
     /// </summary>
     public class CamFollow: ICmd

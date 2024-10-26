@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
+    /// <summary>
+    /// Literally just stops a Movement2D object. "Hits the brakes."
+    /// Useful for Cutscenes and triggers because Movement2D will keep moving as long as m_speed is greater than 0.
+    /// </summary>
     public class Brake : ICmd
     {
         public string ID { get; set; }

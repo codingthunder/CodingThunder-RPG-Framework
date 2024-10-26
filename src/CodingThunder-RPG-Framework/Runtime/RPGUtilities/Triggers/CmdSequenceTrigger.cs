@@ -13,7 +13,7 @@ namespace CodingThunder.RPGUtilities.Triggers
 	[RequireComponent(typeof(Collider2D))]
 	public class CmdSequenceTrigger: GameStateManaged
 	{
-		[Header("Sequences are processed one after the other." +
+		[Tooltip("Sequences are processed one after the other." +
 			"\nIf one is skipped, the next will still run if its condition is valid.")]
 		public List<CmdSequence> triggerSequences;
 

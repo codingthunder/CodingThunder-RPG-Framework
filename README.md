@@ -24,8 +24,8 @@ The following are necessary to achieve what I consider to be "version 1.0."
 - [x] Parsable Cmd System
 - [x] Expression-driven Data Management
 - [x] Story-driven Game Flow
-- [] Semi-automated Documentation
-- [] Unit Tests (seriously, though, these will make writing Cmds a million times easier)
+- [] Semi-automated Documentation (includes adjusting Cmds to make them easier to work with)
+- [] Unit Tests (seriously, though, these will make programming Cmds a million times easier)
 - [] Stat-Driven RPG Mechanics
 - [] QUESTS!
 - [] Basic Stat-Driven Combat
@@ -92,6 +92,9 @@ After that, well, I'm working on getting a how-to guide up and running. I made a
 The Framework is built around two pillars: Cmds, and RPGRefs
 
 ## Cmds
+> [!IMPORTANT]
+> Putting this RIGHT AT THE TOP so it can't be missed. If you're going to define custom Cmds, **MAKE SURE YOU INVOKE YOUR completionCallback!!!** If your Cmd isn't ending when it's supposed to, and your Sequence isn't moving to the next Cmd when it's supposed to, you probably forgot to invoke your completionCallback.
+
 Cmds exist so that non-coders can easily insert gameplay logic into narrative designs, triggers, etc. It is possible to use Cmds directly from code, but if at any point the Dev actually writes the Cmd out to be parsed by the Framework, at some point that string is going to be fed into a CmdExpression, which will then spit out the actual Cmd.
 
 I'm personally not a fan of node-based systems (I'm not a super visual person), and so I wanted something where I could just plug commands into my story script to make things happen during cutscenes. One of the Framework's dependencies is the [Ink framework](https://github.com/inkle/ink), a powerful tool for writing stories for games. The CTRPGF supports inserting Cmds directly into your Ink story script to control the game.

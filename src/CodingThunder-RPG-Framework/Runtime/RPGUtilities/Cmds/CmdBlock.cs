@@ -6,6 +6,12 @@ using System.Linq;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
+	/// <summary>
+	/// TODO: update to match newer development paradigms.
+	/// Between CmdBlocks & CmdExpressions, you should prefer CmdExpressions for now.
+	/// CmdBlocks should really only be used if the contained Cmds MUST be executed at the same time, not in sequential order.
+	/// CmdBlocks will be more viable after I've gone in and updated them.
+	/// </summary>
 	[Serializable]
 	public class CmdBlock
 	{

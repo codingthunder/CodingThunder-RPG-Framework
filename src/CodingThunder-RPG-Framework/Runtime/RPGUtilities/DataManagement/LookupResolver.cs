@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.DataManagement
 {
+	/// <summary>
+	/// An actual monstrosity. Unless you know what you're doing, avoid messing with for now. Focus on using RPGRefs.
+	/// Only exception, maybe, is registering custom root keywords, custom resolvers, and custom toStrings.
+	/// </summary>
 	public class LookupResolver
 	{
 		private static readonly Lazy<LookupResolver> _instance = new(() => new LookupResolver());
@@ -93,6 +97,17 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			var labelValues = ResolveLabels(reference);
 
 			reference = reference.Replace("$$", "");
+
+			//TODO: make this commented code work.
+			//if (labelValues.Count == 1)
+			//{
+			//	var key = labelValues.Keys.FirstOrDefault();
+
+			//	if (key.Trim() == reference.Trim())
+			//	{
+			//		return labelValues[key];
+			//	}
+			//}
 
 			if (typeForT != null && _customResolvers.TryGetValue(typeForT, out var resolver))
 			{

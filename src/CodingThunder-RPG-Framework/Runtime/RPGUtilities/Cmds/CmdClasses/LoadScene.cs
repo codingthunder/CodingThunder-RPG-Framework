@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
+	/// Might deprecate and replace with something safer. Generally, this should usually be called from within Ink, not
+	/// from within a scene itself.
 	/// Set SceneName name with Parameters["SceneName"]
 	/// </summary>
 	public class LoadScene : ICmd
