@@ -86,7 +86,7 @@ Finally, select NuGet from the top menu in Unity, and then select "Restore Packa
 Once all of that is finished, your project should be ready to start working.
 
 ## Starting a New Project
-After that, well, I'm working on getting a how-to guide up and running. I made an example, but it uses some assets I don't have the rights to, so I'm going to try making a different example soon.
+After that, well, I'm working on getting a how-to guide up and running. For now, feel free to check out the example as mentioned above.
 
 # Core Features
 The Framework is built around two pillars: Cmds, and RPGRefs
