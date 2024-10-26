@@ -52,6 +52,15 @@ Cmd=KMoveOverTime:Target=$$Scene.CameraTarget:Position=$$Scene.{player_object_na
 Cmd=CamFollow:Target="{player_object_name}"
 -> END
 
+=EndExampleTrigger
+Cmd=Brake:Target=$$Scene.{player_object_name}
+Unfortunately for the Traveler, the Doors of Solace would not open.
+This is because JC's writing this script at 5 in the damn morning.
+Hopefully, this brief scene is sufficient for a basic example.
+A more thorough example shall come later.
+Thank you for looking at the Coding Thunder RPG Framework.
+-> END
+
 
 ////TUNNELS SECTION BELOW
 
