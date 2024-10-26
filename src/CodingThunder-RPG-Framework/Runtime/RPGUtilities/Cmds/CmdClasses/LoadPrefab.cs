@@ -12,9 +12,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// the LookupResolver can't tell the difference between an active GameObject and a prefab.
 	/// You can still use labels inside your Prefab targetId though.
 	/// Note: In this context, "Load" means "Instantiate". "Load" is just easier to spell.
-	/// Set prefab path with Parameters["Target"] (exclude "Assets" or "Resources" in your targetId)
+	/// Set prefab path with Parameters["Position"] (exclude "Assets" or "Resources" in your targetId)
 	/// Set if the object is immediately enabled with Parameters["Enabled"]
-	/// Set the object's position with Parameters["Pos"]
+	/// Set the object's position with Parameters["Pos"]. Note: Vector2 Parser is slightly broken, so don't include References for the x or y.
 	/// Access the newly instantiated Parameters["Result"]
 	/// </summary>
 	public class LoadPrefab : ICmd
@@ -25,6 +25,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 		public object ReturnValue { get; set; }
 
 		public bool Suspended { get; set; }
+
 
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
@@ -38,6 +39,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 			if (Parameters.TryGetValue("Pos", out var posString)){
 				position = new RPGRef<Vector2>() { ReferenceId = posString };
+			}
+
+			string name = null;
+
+			if (Parameters.TryGetValue("Name", out var nameRef))
+			{
+				name = new RPGRef<string>() { ReferenceId = nameRef };
 			}
 
 			//if (Parameters.TryGetValue("X", out var xString))
@@ -56,7 +64,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 			var instance = UnityEngine.Object.Instantiate(Resources.Load(prefabId), position, Quaternion.Euler(0, 0, 0)) as GameObject;
 			instance.SetActive(enabled);
 
-			ReturnValue = instance;
+			if (!string.IsNullOrEmpty(name))
+			{
+				instance.name = name;
+			}
+			
+
+			ReturnValue = instance.name;
 			completionCallback.Invoke(this);
 			yield break;
 

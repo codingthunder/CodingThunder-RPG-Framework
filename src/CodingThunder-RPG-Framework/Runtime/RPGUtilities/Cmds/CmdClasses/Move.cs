@@ -8,7 +8,8 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Set target GameObject with Parameters["Target"] ("Scene.MyCharacter")
+	/// Uses Movement2D component to move. TODO: change Dur to Dist--Dur is a stupid way to define movement.  
+	/// Set target GameObject with Parameters["Position"] ("SceneName.MyCharacter")
 	/// Set x-direction with Parameters["X"]
 	/// Set y-direction with Parameters["Y"]
 	/// Set speed with Parameters["Speed"]

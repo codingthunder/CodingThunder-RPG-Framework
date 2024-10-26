@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -57,3 +58,4 @@ public class RPGRefDrawer : PropertyDrawer
 		return EditorGUIUtility.singleLineHeight * 3 + 6;
 	}
 }
+#endif

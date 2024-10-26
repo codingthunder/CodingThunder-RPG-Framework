@@ -7,10 +7,15 @@ using System;
 using System.Linq;
 using CodingThunder.RPGUtilities.DataManagement;
 
+/// <summary>
+/// Use this to grab any object from a scene by its name.
+/// It's just a little simpler than calling GameObject.Find().
+/// If you just write $$Scene, it'll return the active Scene itself.
+/// As I write that, I realize that's probably broken. Try fetching the active scene at your own risk.
+/// </summary>
 public class SceneDataManager : MonoBehaviour
 {
     public static SceneDataManager Instance;
-    Dictionary<string, Actor> actorLookup = new Dictionary<string, Actor>();
 
 	private void Awake()
 	{

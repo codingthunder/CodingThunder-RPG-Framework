@@ -1,5 +1,6 @@
 using CodingThunder.RPGUtilities.DataManagement;
 using CodingThunder.RPGUtilities.SaveData;
+using CodingThunder.RPGUtilities.RPGStory;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,12 +10,12 @@ using UnityEngine.SceneManagement;
 namespace CodingThunder.RPGUtilities.GameState
 {
 
-	/// <summary>
-	/// Needs to be singleton. It's Highlander. THERE CAN BE ONLY ONE.
-	/// Responsible for connecting together all the different pieces.
-	/// </summary>
-	/// 
-	[RequireComponent(typeof(StoryRunner))]
+    /// <summary>
+    /// Needs to be singleton. It's Highlander. THERE CAN BE ONLY ONE.
+    /// Responsible for connecting together all the different pieces.
+    /// </summary>
+    /// 
+    [RequireComponent(typeof(StoryRunner))]
 	[RequireComponent(typeof(GameDataManager))]
 	[RequireComponent(typeof(SceneDataManager))]
 
@@ -22,10 +23,11 @@ namespace CodingThunder.RPGUtilities.GameState
 	{
 		public static GameRunner Instance { get; private set; }
 
-		private GameDataManager gameDataManager;
-		private SceneDataManager sceneDataManager;
-		private StoryRunner storyRunner;
+		public GameDataManager gameDataManager;
+		public SceneDataManager sceneDataManager;
+		public StoryRunner storyRunner;
 
+		public bool debugMode;
 
 		[SerializeField]
 		[Header("Will skip game load.")]
@@ -36,12 +38,16 @@ namespace CodingThunder.RPGUtilities.GameState
 		[Header("Use this to register all the classes in a namespace to the Expression Evaluator.")]
 		[SerializeField]
 		private List<string> registeredNamespaces = new List<string>();
-		[Header("Use this to register all a single in a class (with its fully qualified namespace) to the Expression Evaluator.")]
+		[Header("Use this to register a single class (with its fully qualified namespace) to the Expression Evaluator.")]
 		[SerializeField]
 		private List<string> registeredClasses = new List<string>();
 
 		private void ChangeGameState(GameStateEnum gameState)
 		{
+			if (debugMode)
+			{
+				UnityEngine.Debug.Log($"Changing GameState to: {GameState}");
+			}
 			GameState = gameState;
 		}
 
@@ -55,9 +61,9 @@ namespace CodingThunder.RPGUtilities.GameState
 
 			DontDestroyOnLoad(gameObject);
 
-			gameDataManager = GetComponent<GameDataManager>();
-			sceneDataManager = GetComponent<SceneDataManager>();
-			storyRunner = GetComponent<StoryRunner>();
+			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
+			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();
+			if (storyRunner == null) storyRunner = GetComponent<StoryRunner>();
 
 			OnChangeGameState += ChangeGameState;
 
@@ -100,7 +106,7 @@ namespace CodingThunder.RPGUtilities.GameState
             {
                 storyRunner.Next();
             }
-            //Uhhh... handle other states here as necessary. 
+            //Uhhh... handle otherCollider states here as necessary. 
 
         }
 

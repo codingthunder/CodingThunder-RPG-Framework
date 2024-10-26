@@ -9,7 +9,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Kinematically move something. Useful if physics doesn't affect it.
 	/// Does NOT need a Rigidbody attached.
-	/// Set target GameObject with Parameters["Target"] ("Scene.MyCharacter")
+	/// Set target GameObject with Parameters["Position"] ("SceneName.MyCharacter")
 	/// Set x-direction with Parameters["X"]
 	/// Set y-direction with Parameters["Y"]
 	/// Set speed with Parameters["Speed"]

@@ -7,6 +7,13 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
+
+	/// <summary>
+	/// Stores data as-is on the GameData dictionary.
+	/// Primitives are copied, objects are stored by reference.
+	/// That means changes you make to the data object will be persisted in the GameData dictionary as well.
+	/// Useful for things like storing a character's current stats.
+	/// </summary>
 	public class PersistData: ICmd
 	{
 		public string ID { get; set; }
@@ -17,7 +24,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		/// <summary>
 		/// To set persisted Key, use Parameters["Key"]
-		/// To select the data to be persisted, use Parameters["Target"]
+		/// To select the data to be persisted, use Parameters["Position"]
 		/// To set the type for the persisted data, use Parameters["Type"]
 		/// </summary>
 		/// <param name="completionCallback"></param>

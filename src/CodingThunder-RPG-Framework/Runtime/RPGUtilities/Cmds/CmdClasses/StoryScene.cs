@@ -8,7 +8,10 @@ using System.Collections.Generic;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Set scene with Parameters["Scene"]
+	/// After using an InkTrigger (which is best), this is the second-best way to change Scenes in the Framework.
+	/// You usually want to actually trigger the Unity Scene change from within Ink. Doing so consolidates all
+	/// Scene initialization logic into a single location. See the ExampleScene's ink script.
+	/// Set scene with Parameters["SceneName"]
 	/// </summary>
 	public class StoryScene: ICmd
 	{
@@ -25,7 +28,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 			{
 				yield return null;
 			}
-			string storySceneId = new RPGRef<string>() { ReferenceId = Parameters["Scene"] };
+			string storySceneId = new RPGRef<string>() { ReferenceId = Parameters["SceneName"] };
 
 			GameRunner.Instance.StartCutscene(storySceneId);
 			completionCallback.Invoke(this);

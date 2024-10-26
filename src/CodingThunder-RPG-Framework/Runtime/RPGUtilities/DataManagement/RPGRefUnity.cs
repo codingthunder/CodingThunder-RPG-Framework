@@ -4,7 +4,11 @@ using System.Reflection;
 
 namespace CodingThunder.RPGUtilities.DataManagement
 {
-	
+	/// <summary>
+	/// Unity doesn't like properties, so I made a Unity-compatible version of RPGRef.
+	/// I haven't found a reason to actually use it yet (a side-effect of figuring things out as I go),
+	/// but I'm keeping it in case a reason comes up.
+	/// </summary>
 	[System.Serializable]
 	public class RPGRefUnity
 	{
