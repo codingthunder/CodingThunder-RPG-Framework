@@ -33,12 +33,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 			if (!args.ContainsKey("Cmd"))
 			{
 				Debug.LogError($"Missing Cmd Key in CmdExpression: {expression}");
+				return null;
 			}
 			Type type = Type.GetType("CodingThunder.RPGUtilities.Cmds." + args["Cmd"]);
 
 			if (type == null)
 			{
 				Debug.LogError($"Bad Cmd name in CmdExpression: {expression}");
+				return null;
 			}
 
 			ICmd cmd = Activator.CreateInstance(type) as ICmd;
