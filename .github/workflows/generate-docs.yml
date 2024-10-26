@@ -23,9 +23,16 @@ jobs:
           wget https://github.com/dotnet/docfx/releases/download/v2.58/docfx.zip
           unzip docfx.zip -d docfx
 
+      - name: Locate DocFX Path
+        id: locate_docfx
+        run: |
+          DOCFX_PATH=$(find $GITHUB_WORKSPACE -name "docfx" -type f -executable | head -n 1)
+          echo "DOCFX_PATH=$DOCFX_PATH" >> $GITHUB_ENV
+
       - name: Generate Documentation
         run: |
-          docfx/docfx/docfx docfx_project/docfx.json
+          $DOCFX_PATH docfx_project/docfx.json
+        
 
       - name: Publish to GitHub Wiki
         uses: peaceiris/actions-gh-pages@v3
