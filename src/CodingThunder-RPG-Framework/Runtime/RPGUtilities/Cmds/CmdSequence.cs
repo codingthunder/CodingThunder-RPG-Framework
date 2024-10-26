@@ -39,6 +39,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public void AddCmds(List<string> cmds)
 		{
+			if (cmdExpressions == null)
+			{
+				cmdExpressions = new List<CmdExpression>();
+			}
+
 			cmdExpressions.AddRange(cmds.Select(x => new CmdExpression() { expression = x }));
 		}
 

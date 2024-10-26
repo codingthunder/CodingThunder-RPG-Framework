@@ -14,14 +14,14 @@ namespace CodingThunder.RPGUtilities.DataManagement
 	/// </summary>
 	public class LookupResolver
 	{
-		private static readonly Lazy<LookupResolver> _instance = new(() => new LookupResolver());
+		private static LookupResolver _instance;
 
 		public readonly string labelRegex = @"\$\$([a-zA-Z0-9\._]+)";
 
-		public static LookupResolver Instance => _instance.Value;
+        public static LookupResolver Instance => _instance ??= new LookupResolver();
 
-		//private Dictionary<Type, Func<string, object>> _resolvers;
-		private Dictionary<Type, Func<string, Dictionary<string, object>, object>> _customResolvers = new();
+        //private Dictionary<Type, Func<string, object>> _resolvers;
+        private Dictionary<Type, Func<string, Dictionary<string, object>, object>> _customResolvers = new();
 		private Dictionary<string, Func<List<string>, object>> _rootKeywords = new();
 		private Dictionary<Type, Func<object, string>> _customToStrings = new();
 
@@ -30,7 +30,16 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			RegisterResolver(typeof(Vector2), Vector2Resolver.ResolveVector2);
 		}
 
-		public void RegisterResolver(Type type, Func<string, Dictionary<string, object>, object> resolver)
+#if UNITY_INCLUDE_TESTS
+        // This method will only exist when running tests
+		// I should strongly consider a service-focused approach for mocking, but this will work for now.
+        public static void SetInstanceForTesting(LookupResolver testInstance)
+        {
+            _instance = testInstance;
+        }
+#endif
+
+        public void RegisterResolver(Type type, Func<string, Dictionary<string, object>, object> resolver)
 		{
 			_customResolvers[type] = resolver;
 		}
