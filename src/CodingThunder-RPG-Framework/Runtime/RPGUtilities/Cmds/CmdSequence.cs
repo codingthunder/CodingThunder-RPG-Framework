@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using UnityEngine;
 using CodingThunder.RPGUtilities.DataManagement;
+using CodingThunder.RPGUtilities.GameState;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -57,13 +58,17 @@ namespace CodingThunder.RPGUtilities.Cmds
 		}
 
 
-		public IEnumerator ExecuteCmdSequence(MonoBehaviour cmdRunner, Action<CmdSequence> completionCallback)
+		public IEnumerator ExecuteCmdSequence(MonoBehaviour cmdRunner, Action<CmdSequence> completionCallback, Action<CmdSequence> cancelCallback)
 		{
 			if (condition != null && !condition.Value)
 			{
-				Debug.Log($"CmdSequence condition was not met. Cancelling. No completionCallback. Do not pass go.");
+
+				if (GameRunner.Instance.debugMode) {
+                    Debug.Log($"CmdSequence condition was not met. Cancelling. No completionCallback. Do not pass go.");
+                }
+				
 				//TODO: Possibly add a cancellation Callback.
-				completionCallback.Invoke(this);
+				cancelCallback.Invoke(this);
 				yield break;
 			}
 

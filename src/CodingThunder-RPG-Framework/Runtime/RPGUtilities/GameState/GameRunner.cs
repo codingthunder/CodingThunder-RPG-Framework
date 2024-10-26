@@ -26,6 +26,7 @@ namespace CodingThunder.RPGUtilities.GameState
 		private SceneDataManager sceneDataManager;
 		private StoryRunner storyRunner;
 
+		public bool debugMode;
 
 		[SerializeField]
 		[Header("Will skip game load.")]
@@ -36,12 +37,16 @@ namespace CodingThunder.RPGUtilities.GameState
 		[Header("Use this to register all the classes in a namespace to the Expression Evaluator.")]
 		[SerializeField]
 		private List<string> registeredNamespaces = new List<string>();
-		[Header("Use this to register all a single in a class (with its fully qualified namespace) to the Expression Evaluator.")]
+		[Header("Use this to register a single class (with its fully qualified namespace) to the Expression Evaluator.")]
 		[SerializeField]
 		private List<string> registeredClasses = new List<string>();
 
 		private void ChangeGameState(GameStateEnum gameState)
 		{
+			if (debugMode)
+			{
+				UnityEngine.Debug.Log($"Changing GameState to: {GameState}");
+			}
 			GameState = gameState;
 		}
 
@@ -100,7 +105,7 @@ namespace CodingThunder.RPGUtilities.GameState
             {
                 storyRunner.Next();
             }
-            //Uhhh... handle other states here as necessary. 
+            //Uhhh... handle otherCollider states here as necessary. 
 
         }
 

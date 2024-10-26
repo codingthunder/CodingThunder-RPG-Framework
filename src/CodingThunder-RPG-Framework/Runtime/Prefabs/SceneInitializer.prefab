@@ -45,8 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whitelistedStates: 03000000
-  cmds:
+  startupSequences:
+  - condition:
+      conditionExpression: 
     ID: 
     repeat: 0
     delay: 0
-    cmdExpressions: []
+    cmdExpressions:
+    - expression: Cmd=GetVar:Target=$$GameData.PlayerSpawn:Type=System.String
+    - expression: Cmd=GetVar:Target=$$_:Type=UnityEngine.Vector2
+    - expression: Cmd=LoadPrefab:Target="PlayerCharacter":Enabled=true:Pos=$$_

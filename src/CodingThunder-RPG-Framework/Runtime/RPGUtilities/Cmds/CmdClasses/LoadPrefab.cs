@@ -26,6 +26,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
@@ -38,6 +39,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 			if (Parameters.TryGetValue("Pos", out var posString)){
 				position = new RPGRef<Vector2>() { ReferenceId = posString };
+			}
+
+			string name = null;
+
+			if (Parameters.TryGetValue("Name", out var nameRef))
+			{
+				name = new RPGRef<string>() { ReferenceId = nameRef };
 			}
 
 			//if (Parameters.TryGetValue("X", out var xString))
@@ -56,7 +64,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 			var instance = UnityEngine.Object.Instantiate(Resources.Load(prefabId), position, Quaternion.Euler(0, 0, 0)) as GameObject;
 			instance.SetActive(enabled);
 
-			ReturnValue = instance;
+			if (!string.IsNullOrEmpty(name))
+			{
+				instance.name = name;
+			}
+			
+
+			ReturnValue = instance.name;
 			completionCallback.Invoke(this);
 			yield break;
 

@@ -6,8 +6,10 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	[Serializable]
-    [UnityEditor.CustomPropertyDrawer(typeof(CmdExpression))]
-    public class CmdExpression
+	#if UNITY_EDITOR
+		[UnityEditor.CustomPropertyDrawer(typeof(CmdExpression))]
+	#endif
+	public class CmdExpression
 	{
 		public string expression;
 

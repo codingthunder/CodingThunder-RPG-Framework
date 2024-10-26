@@ -1,3 +1,4 @@
+# TODO: DELETE EXTERNAL PLACEHOLDER ASSETS.
 # What is the Coding Thunder RPG Framework
 The CTRPGF is an RPG Framework with a focus on story-driven game control and data-driven flexibility. It emphasizes the ability to do game development with the tools best suited for the task, rather than doing everything inside the engine.
 

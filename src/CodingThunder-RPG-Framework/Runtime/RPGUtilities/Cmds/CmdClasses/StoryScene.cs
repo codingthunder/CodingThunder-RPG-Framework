@@ -8,7 +8,8 @@ using System.Collections.Generic;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Set scene with Parameters["Scene"]
+	/// Set scene with Parameters["SceneName"]
+	/// Considering Deprecation.
 	/// </summary>
 	public class StoryScene: ICmd
 	{

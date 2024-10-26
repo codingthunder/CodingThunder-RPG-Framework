@@ -9,6 +9,9 @@ using System;
 using UnityEngine.EventSystems;
 public class StoryUI : MonoBehaviour
 {
+    public float secondsPerCharacter = 0.06f;
+    public float waitTimeOnAuto = 0.5f;
+
     public RectTransform NarrationDisplayPanel;
     public RectTransform NarrationPanel;
     public RectTransform NamePanel;
@@ -83,7 +86,7 @@ public class StoryUI : MonoBehaviour
         }
     }
 
-    public void Narrate(string narrationText, string nameText = null)
+    public void Narrate(string narrationText, string nameText, bool auto)
     {
         nextBtn.gameObject.SetActive(false);
         NarrationDisplayPanel.gameObject.SetActive(true);
@@ -100,7 +103,7 @@ public class StoryUI : MonoBehaviour
 
         NarrationPanel.gameObject.SetActive(true);
 
-        StartCoroutine(NarrateOverTime(narrationText, 0.06f));
+        StartCoroutine(NarrateOverTime(narrationText, secondsPerCharacter, auto));
     }
 
     public void DisplayInput(string prompt)
@@ -108,7 +111,7 @@ public class StoryUI : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private IEnumerator NarrateOverTime(string text, float timeBetweenCharacters)
+    private IEnumerator NarrateOverTime(string text, float timeBetweenCharacters, bool auto)
     {
         var charIndex = 0;
         NarrationText.text = "";
@@ -116,6 +119,12 @@ public class StoryUI : MonoBehaviour
         for (charIndex = 0; charIndex < text.Length; charIndex++) {
 			yield return new WaitForSecondsRealtime(timeBetweenCharacters);
 			NarrationText.text += text[charIndex];
+        }
+
+        if (auto)
+        {
+            yield return new WaitForSecondsRealtime(waitTimeOnAuto);
+            yield break;
         }
 
         nextBtn.gameObject.SetActive(true);

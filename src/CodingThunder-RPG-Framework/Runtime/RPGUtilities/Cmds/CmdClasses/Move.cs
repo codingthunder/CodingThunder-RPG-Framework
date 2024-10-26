@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
-	/// Set target GameObject with Parameters["Target"] ("Scene.MyCharacter")
+	/// Set target GameObject with Parameters["Target"] ("SceneName.MyCharacter")
 	/// Set x-direction with Parameters["X"]
 	/// Set y-direction with Parameters["Y"]
 	/// Set speed with Parameters["Speed"]

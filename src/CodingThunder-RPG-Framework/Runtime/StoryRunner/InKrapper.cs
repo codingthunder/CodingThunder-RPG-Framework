@@ -4,7 +4,6 @@ using UnityEngine;
 using Ink.Runtime;
 using System;
 using System.Linq;
-using UnityEditor.UI;
 /// <summary>
 /// TODO: keep this wrapper. I can always add more mechanics to it later.
 /// </summary>
@@ -14,11 +13,11 @@ public class InKrapper
     Action narrate;//Why is this here again?
 
     public Action<List<Choice>> ChoiceCallback;
-    public Action<string> ContinueCallback;
+    public Action<string,bool> ContinueCallback;
     public Action EndSceneCallback;
 
     private string _prompt = null;
-    public InKrapper(string storyText, Action<string> continueCallback, Action<List<Choice>> choiceCallback, Action endSceneCallback)
+    public InKrapper(string storyText, Action<string, bool> continueCallback, Action<List<Choice>> choiceCallback, Action endSceneCallback)
     {
         this.ChoiceCallback = choiceCallback;
         this.ContinueCallback = continueCallback;
@@ -46,7 +45,17 @@ public class InKrapper
     {
         if (_inkStory.canContinue)
         {
-            ContinueCallback(_inkStory.Continue());
+
+            var lineData = _inkStory.Continue();
+            var tags = _inkStory.currentTags;
+
+            //If it's dialogue, will continue after a set amount of time (not yet coded).
+            //If it's a Cmd or Cmd Sequence, will start the Cmd but will not wait for it to finish before Continuing.
+            var auto = tags.Contains("auto");
+
+            //Debug.Log(lineData);
+
+            ContinueCallback(lineData, auto);
             return;
         }
 

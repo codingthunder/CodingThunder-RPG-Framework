@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -88,3 +89,5 @@ namespace CodingThunder.RPGUtilities.Cmds
         }
     }
 }
+
+#endif
