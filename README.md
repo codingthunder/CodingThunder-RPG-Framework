@@ -1,5 +1,5 @@
 # What is the Coding Thunder RPG Framework
-The CTRPGF is an RPG Framework with a focus on story-driven game control and data-driven flexibility. It emphasizes the ability to do game development with the tools best suited for the task, rather than doing everything inside the engine.
+The CTRPGF is an RPG Framework with a focus on story-driven game control and data-driven flexibility. It is built to be used with the Unity Engine and the Ink Story Scripting Language, and it emphasizes the ability to do game development with the tools best suited for the task, rather than doing everything inside the engine.
 
 Right now, the Framework is still in very, very early development. It's going to have plenty of bugs, and it will be some time before it's considered feature-complete. But I wanted to get the ball rolling on it and let people take a crack at it if they want to.
 
