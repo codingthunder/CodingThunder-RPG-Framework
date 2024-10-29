@@ -11,7 +11,10 @@ namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
 	/// Use to set a variable on one object to either a value or a variable of another object.
-	/// Parameters: Source, Position
+	/// Parameters: Source, Target
+	/// There is literally no reason to use this in code, so I won't be attaching properties.
+	/// In fact, you should never use this from code. It's so much damn slower than just assigning something
+	/// normally.
 	/// </summary>
 	public class SetVar: ICmd
 	{

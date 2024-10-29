@@ -35,7 +35,7 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		//	{
 		//		return new RPGRef<T>() { ReferenceId = reference.ReferenceId };
 		//	}
-		//	throw new ArgumentException($"RPGRef<{typeof(T).Name}> failed to be assigned from RPGRefUnity with TypeName {reference.TypeName}");
+		//	throw new ArgumentException($"RPGRef<{typeof(T).PrefabId}> failed to be assigned from RPGRefUnity with TypeName {reference.TypeName}");
 		//}
 
 		public override bool Equals(object obj)

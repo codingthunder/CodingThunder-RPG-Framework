@@ -9,7 +9,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 {
 	/// <summary>
 	/// Remove a GameObject. Disables the object, doesn't destroy it.
-	/// To set target, set Parameters["Position"]
+	/// To set target, set Parameters["Target"]
+	/// Because any target despawned MUST be in the scene, the $$Scene root keyword is assumed,
+	/// though you can add it manually if you wish.
 	/// </summary>
 	public class Despawn : ICmd
 	{
@@ -19,6 +21,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+		public GameObject Target { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
@@ -26,15 +30,18 @@ namespace CodingThunder.RPGUtilities.Cmds
 				yield return null;
 			}
 
-			var tarString = Parameters["Target"];
-
-			if (!tarString.StartsWith("$$Scene."))
+			if (Target == null)
 			{
-				tarString = "$$Scene." + tarString;
-			}
-			GameObject target = new RPGRef<GameObject>() { ReferenceId = tarString };
+				var tarString = Parameters["Target"];
 
-			target.SetActive(false);
+				if (!tarString.StartsWith("$$Scene."))
+				{
+					tarString = "$$Scene." + tarString;
+				}
+				Target = new RPGRef<GameObject>() { ReferenceId = tarString };
+			}
+
+			Target.SetActive(false);
 			//UnityEngine.Object.Destroy(target);
 			completionCallback.Invoke(this);
 			yield break;

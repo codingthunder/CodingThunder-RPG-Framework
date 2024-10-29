@@ -9,9 +9,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Kinematically move something. Useful if physics doesn't affect it.
 	/// Does NOT need a Rigidbody attached.
-	/// Set target GameObject with Parameters["Position"] ("SceneName.MyCharacter")
-	/// Set x-direction with Parameters["X"]
-	/// Set y-direction with Parameters["Y"]
+	/// Set target GameObject with Parameters["Target"] ("SceneName.MyCharacter")
+	/// Set direction in degrees with Parameters["Dir"] (0 degrees = UP)
 	/// Set speed with Parameters["Speed"]
 	/// Set distance with Parameters["Dist"] (measured in Unity Units)
 	/// </summary>
@@ -23,6 +22,20 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+		public GameObject Target { get; set; }
+		/// <summary>
+		/// Angles! Defaults 0 to UP!
+		/// </summary>
+		public float? Dir {  get; set; }
+		/// <summary>
+		/// Unity Units per second
+		/// </summary>
+		public float? Speed { get; set; }
+		/// <summary>
+		/// Measured in Unity Units.
+		/// </summary>
+		public float? Dist { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
@@ -30,15 +43,29 @@ namespace CodingThunder.RPGUtilities.Cmds
 				yield return null;
 			}
 
-			GameObject target = new RPGRef<GameObject> { ReferenceId = Parameters["Target"] };
-			float x = new RPGRef<float> { ReferenceId = Parameters["X"] };
-			float y = new RPGRef<float> { ReferenceId = Parameters["Y"] };
-			float speed = new RPGRef<float> { ReferenceId = Parameters["Speed"] };
-			float dist = new RPGRef<float> { ReferenceId = Parameters["Dist"] };
+			if (Target == null)
+			{
+				Target = new RPGRef<GameObject> { ReferenceId = Parameters["Target"] };
+			}
+			if (Dir == null)
+			{
+				Dir = new RPGRef<float> { ReferenceId = Parameters["Dir"] };
+			}
+			if (Speed == null)
+			{
+				Speed = new RPGRef<float> { ReferenceId = Parameters["Speed"] };
+			}
+			if (Dist == null)
+			{
+				Dist = new RPGRef<float> { ReferenceId = Parameters["Dist"] };
+			}
 
-			Transform targetTransform = target.transform;
-			Vector2 moveVector = new Vector2(x, y).normalized * speed;
-			Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
+			Transform targetTransform = Target.transform;
+
+			Vector2 direction = AngleToVector2(Dir.Value);
+
+			Vector2 moveVector = direction.normalized * Speed.Value;
+			Rigidbody2D rb = Target.GetComponent<Rigidbody2D>();
 
 			var isRbKinematic = true;
 
@@ -51,7 +78,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 			var distTraveled = 0f;
 
 
-			while (distTraveled < dist)
+			while (distTraveled < Dist)
 			{
 				while (Suspended)
 				{
@@ -78,6 +105,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 				distTraveled += (newPos - currentPos).magnitude;
 			}
 
+			//Depending on framerate, the object may overshoot target. May want to implement correction.
+
 			if (rb != null)
 			{
 				rb.isKinematic = isRbKinematic;
@@ -86,6 +115,18 @@ namespace CodingThunder.RPGUtilities.Cmds
 			completionCallback.Invoke(this);
 			yield break;
 
+		}
+
+		/// <summary>
+		/// Converts an angle to a Vector2. Remember: 0 degrees = UP.
+		/// </summary>
+		/// <param name="angle">DEFAULT 0 degrees = UP</param>
+		/// <returns></returns>
+		public static Vector2 AngleToVector2(float angle)
+		{
+			float radians = (angle - 90) * Mathf.Deg2Rad;
+
+			return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 		}
 	}
 }
