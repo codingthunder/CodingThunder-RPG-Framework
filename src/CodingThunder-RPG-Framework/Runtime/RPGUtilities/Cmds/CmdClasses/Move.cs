@@ -10,10 +10,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Uses Movement2D component to move. TODO: change Dur to Dist--Dur is a stupid way to define movement.  
 	/// Set target GameObject with Parameters["Position"] ("SceneName.MyCharacter")
-	/// Set x-direction with Parameters["X"]
-	/// Set y-direction with Parameters["Y"]
+	/// Set direction angle (degrees) with Parameters["Dir"]
 	/// Set speed with Parameters["Speed"]
-	/// Set duration with Parameters["Dur"] (if zero, will go forever. If negative, will go for number of frames)
+	/// Set distance with Parameters["Dist"]
 	/// </summary>
 	public class Move: ICmd
 	{
@@ -24,78 +23,74 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+		public GameObject Target { get; set; }
+
+		/// <summary>
+		/// Angle of movement, 0 degrees = UP.
+		/// </summary>
+		public float? Dir {  get; set; }
+
+		public float? Speed { get; set; }
+
+		public float? Dist {  get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
 			{
 				yield return null;
 			}
+			if (Target == null)
+			{
+				Target = new RPGRef<GameObject>() { ReferenceId = Parameters["Target"] };
+			}
+			if (Dir == null)
+			{
+				Dir = new RPGRef<float>() { ReferenceId = Parameters["Dir"] };
+			}
+			if (Dist == null)
+			{
+				Dist = new RPGRef<float>() { ReferenceId = Parameters["Dist"] };
+			}
+			//float xDir = new RPGRef<float>() { ReferenceId = Parameters["X"] };
+			//float yDir = new RPGRef<float>() { ReferenceId = Parameters["Y"] };
+			//float speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
+			//float dur = new RPGRef<float>() { ReferenceId = Parameters["Dur"] };
 
-			GameObject target = new RPGRef<GameObject>() { ReferenceId = Parameters["Target"] };
-			float xDir = new RPGRef<float>() { ReferenceId = Parameters["X"] };
-			float yDir = new RPGRef<float>() { ReferenceId = Parameters["Y"] };
-			float speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
-			float dur = new RPGRef<float>() { ReferenceId = Parameters["Dur"] };
+			Vector2 direction = KMove.AngleToVector2(Dir.GetValueOrDefault());
 
-			Vector2 direction = new Vector2(xDir, yDir);
-
-			Movement2D movement2D = target.GetComponent<Movement2D>();
+			Movement2D movement2D = Target.GetComponent<Movement2D>();
 
 			if (movement2D == null)
 			{
-				Debug.LogError($"Target {Parameters["Target"]} does not have the Movement2D component. Unable to move.");
+				Debug.LogError($"Target {Target.name} does not have the Movement2D component and cannot Move." +
+					$" Try using KMove" +
+					$"or KMoveOverTime instead.");
+				completionCallback.Invoke(this);
 				yield break;
 			}
 
 			var existing_speed = movement2D.m_speed;
 
-			movement2D.m_direction = new Vector2(xDir, yDir);
-			movement2D.m_speed = speed;
-			
-			
-			if (dur > 0)
-			{
-				var timePast = 0f;
+			movement2D.m_direction = direction;
+			movement2D.m_speed = Speed.GetValueOrDefault();
 
-				while (timePast < dur)
+			float distanceMoved = 0f;
+
+			while (distanceMoved < Dist.GetValueOrDefault())
+			{
+				if (Suspended)
 				{
 					yield return null;
-					if (Suspended)
-					{
-						continue;
-					}
-					timePast += Time.deltaTime;
+					continue;
 				}
-				//The while loop above basically does this, but also allows for Suspension.
-				//yield return new WaitForSeconds(dur);
-				movement2D.m_direction = new Vector2 (0f, 0f);
-				movement2D.m_speed = existing_speed;
-				completionCallback.Invoke(this);
-				yield break;
-			}
-			if (dur < 0)
-			{
-				var frameDur = (int)dur * (-1);
-				var framesPast = 0;
-
-				while (framesPast < frameDur)
-				{
-					yield return null;
-					if (Suspended) { continue; }
-					framesPast++;
-				}
-				movement2D.m_direction = new Vector2(0f, 0f);
-				movement2D.m_speed = existing_speed;
-				completionCallback.Invoke(this);
-				yield break;
-
+				yield return new WaitForFixedUpdate();
 			}
 
-			while (true)
-			{
-				yield return null;
-			}
-
+			movement2D.m_direction = new Vector2(0, 0);
+			movement2D.m_speed = existing_speed;
+			completionCallback.Invoke(this);
+			yield break;
 		}
 	}
 }

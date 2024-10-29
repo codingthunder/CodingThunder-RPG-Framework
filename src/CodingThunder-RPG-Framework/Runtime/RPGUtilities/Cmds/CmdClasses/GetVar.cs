@@ -12,7 +12,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Sets the ReturnValue to whatever you are getting. If called from Ink, will set the appropriate global variable.
 	/// See Ink's Utilities/Initialization.ink.
-	/// Set target object with Parameters["Position"]
+	/// There is literally no reason to ever call this from code, so I am not including
+	/// Target or Type as properties.
+	/// Set target object with Parameters["Target"]
 	/// Set target Type with Parameters["Type"]
 	/// </summary>
 	public class GetVar : ICmd
@@ -30,6 +32,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 			{
 				yield return null;
 			}
+
+
 
 			Type type = ResolveType(Parameters["Type"].Trim());
 			if (type == null)

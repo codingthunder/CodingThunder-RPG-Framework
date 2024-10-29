@@ -47,7 +47,7 @@ Elizabeth: For now, I shall call you Traveler.
 Elizabeth: Behind me are the Doors of Solace. Many travelers before you have entered, but none have returned.
 Elizabeth: I cannot say what it is you shall find beyond...
 Elizabeth: Shall you pass through the doors? The choice is yours.
-Cmd=KMove:Target=$$Scene.SisterElizabeth:X=1.0:Y=0.0:Speed=2.0:Dist=2.0
+Cmd=KMove:Target=$$Scene.SisterElizabeth:Dir=90:Speed=2.0:Dist=2.0
 Cmd=KMoveOverTime:Target=$$Scene.CameraTarget:Position=$$Scene.{player_object_name}.transform.position:Dur=3
 Cmd=CamFollow:Target="{player_object_name}"
 -> END
@@ -78,7 +78,7 @@ Cmd=LoadScene:SceneName=BasicScene
 //Initialize scene below.
 
 //LoadPrefab returns the name of the instanced object as a string, so it is accessible as a string.
-Cmd=LoadPrefab:Target="PlayerCharacter":Enabled=true:Pos={player_spawn_ref}:Name="PlayerCharacter"
+Cmd=LoadPrefab:PrefabId="PlayerCharacter":Enabled=true:Pos={player_spawn_ref}:Name="PlayerCharacter"
 ~ player_object_name = result_string
 
 Cmd=CamFollow:Target="{player_object_name}"

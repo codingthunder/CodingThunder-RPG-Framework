@@ -1,8 +1,10 @@
 
+using CodingThunder.RPGUtilities.DataManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -19,6 +21,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+        /// <summary>
+		/// Positive value is seconds.Negative value is frames.
+		/// </summary>
+        public float? Dur {  get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> onFinishCallback)
 		{
 			while (Suspended)
@@ -26,18 +33,25 @@ namespace CodingThunder.RPGUtilities.Cmds
 				yield return null;
 			}
 
-			if (!Parameters.TryGetValue("Dur", out var durString))
+			if (Dur == null)
 			{
-				UnityEngine.Debug.LogError($"WaitCmd failed. Dur arg key not found. See full list of args here:\n\t{Parameters.Keys}");
-				onFinishCallback.Invoke(this);
-				yield break;
-				
+				Dur = new RPGRef<float>() { ReferenceId = Parameters["Dur"] };
 			}
 
-			var dur = float.Parse(durString);
+			//if (!Parameters.TryGetValue("Dur", out var durString))
+			//{
+			//	UnityEngine.Debug.LogError($"WaitCmd failed. Dur arg key not found. See full list of args here:\n\t{Parameters.Keys}");
+			//	onFinishCallback.Invoke(this);
+			//	yield break;
+
+			//}
+
+			//var dur = float.Parse(durString);
 
 			//yield return new WaitForSeconds(dur);
 			//onFinishCallback.Invoke(this);
+
+			var dur = Dur.GetValueOrDefault();
 
 			if (dur > 0)
 			{

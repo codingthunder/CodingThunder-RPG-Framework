@@ -10,7 +10,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 	/// <summary>
 	/// Will not instantiate an object. Only sets it to active.
 	/// Considering deprecation. May be redundant.
-	/// To set target, set Parameters["Position"]
+	/// To set target, set Parameters["Target"]
 	/// </summary>
 	public class Spawn : ICmd
 	{
@@ -20,21 +20,27 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+		public GameObject Target;
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
 			{
 				yield return null;
 			}
-			var tarString = Parameters["Target"];
 
-			if (!tarString.StartsWith("$$Scene."))
+			if (Target == null)
 			{
-				tarString = "$$Scene." + tarString;
-			}
-			GameObject target = new RPGRef<GameObject>() { ReferenceId = tarString };
+				var tarString = Parameters["Target"];
 
-			target.SetActive(true);
+				if (!tarString.StartsWith("$$Scene."))
+				{
+					tarString = "$$Scene." + tarString;
+				}
+				Target = new RPGRef<GameObject>() { ReferenceId = tarString };
+			}
+
+			Target.SetActive(true);
 			//UnityEngine.Object.Destroy(target);
 			completionCallback.Invoke(this);
 			yield break;

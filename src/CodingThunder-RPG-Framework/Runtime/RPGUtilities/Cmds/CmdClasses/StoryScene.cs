@@ -22,15 +22,21 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
+		public string SceneName { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
 			{
 				yield return null;
 			}
-			string storySceneId = new RPGRef<string>() { ReferenceId = Parameters["SceneName"] };
+			if (SceneName == null)
+			{
+                SceneName = new RPGRef<string>() { ReferenceId = Parameters["SceneName"] };
+            }
+			
 
-			GameRunner.Instance.StartCutscene(storySceneId);
+			GameRunner.Instance.StartCutscene(SceneName);
 			completionCallback.Invoke(this);
 			yield break;
 		}
