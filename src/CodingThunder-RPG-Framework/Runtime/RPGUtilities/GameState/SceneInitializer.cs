@@ -1,4 +1,5 @@
 using CodingThunder.RPGUtilities.Cmds;
+using CodingThunder.RPGUtilities.GameState;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

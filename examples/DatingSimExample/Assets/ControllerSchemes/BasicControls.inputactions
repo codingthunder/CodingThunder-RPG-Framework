@@ -1,0 +1,90 @@
+{
+    "name": "BasicControls",
+    "maps": [
+        {
+            "name": "Exploration2D",
+            "id": "a5e5ff24-a057-4d21-a192-395bf9fd7d04",
+            "actions": [
+                {
+                    "name": "Walk2D",
+                    "type": "Value",
+                    "id": "7145bf08-e350-4b28-8d29-388d5ed6fb04",
+                    "expectedControlType": "Vector2",
+                    "processors": "NormalizeVector2",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Direction",
+                    "id": "b12f199e-13a6-427a-a102-19794a45199b",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk2D",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "a1a9b6b9-999b-465c-9a38-634a90102cb7",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Exploring",
+                    "action": "Walk2D",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "628758f8-dbb1-4ce7-a776-f722a8381da7",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Exploring",
+                    "action": "Walk2D",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "31a4397a-d413-4a48-b61f-836a617a109d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Exploring",
+                    "action": "Walk2D",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "c0952910-43e7-4793-b1bf-665418782803",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Exploring",
+                    "action": "Walk2D",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Exploring",
+            "bindingGroup": "Exploring",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

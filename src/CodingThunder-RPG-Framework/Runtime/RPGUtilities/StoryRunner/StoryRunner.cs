@@ -332,6 +332,11 @@ namespace CodingThunder.RPGUtilities.RPGStory
             inkWrapper.JumpToChapter(chapterID);
         }
 
+        public void SetStoryVariable(string name, object value)
+        {
+            inkWrapper.SetStoryVariable(name, value);
+        }
+
         //public void PromptInput(string prompt)
         //{
         //	throw new System.NotImplementedException();

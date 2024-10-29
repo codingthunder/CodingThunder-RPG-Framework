@@ -14,55 +14,13 @@ namespace CodingThunder.RPGUtilities.Triggers
     /// </summary>
     /// 
     [RequireComponent(typeof(Collider2D))]
-    public class InkTrigger : GameStateManaged
+    public class InkTrigger : InteractTrigger
     {
-        /// <summary>
-        /// Use to store any necessary variables, but most logic should be in Ink.
-        /// </summary>
-        public CmdSequence preInkSequence;
-        [Header("Can also point to stitch.")]
-        public string inkKnot;
-
-        private bool sequenceRunning;
-
+        
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!IsActive || sequenceRunning)
-            {
-                return;
-            }
-
-            if (preInkSequence == null)
-            {
-                StartInkKnot();
-                return;
-            }
-
-            sequenceRunning = true;
-            StartCoroutine(preInkSequence.ExecuteCmdSequence(this, OnCompleteTriggerSequence,OnCancelTriggerSequence));
+            RunTrigger(collision);
         }
 
-        private void StartInkKnot()
-        {
-            GameRunner.Instance.StartCutscene(inkKnot);
-        }
-
-        private void OnCompleteTriggerSequence(CmdSequence sequence)
-        {
-            sequenceRunning = false;
-            StartInkKnot();
-        }
-
-        private void OnCancelTriggerSequence(CmdSequence sequence)
-        {
-            sequenceRunning = false;
-        }
-
-        protected override void HandleGameStateChange(GameStateEnum state)
-        {
-            base.HandleGameStateChange(state);
-
-            preInkSequence.SetIsSuspended(!IsActive);
-        }
     }
 }

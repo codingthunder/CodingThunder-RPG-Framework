@@ -97,6 +97,11 @@ namespace CodingThunder.RPGUtilities.RPGStory
             return _inkStory.variablesState[variableName];
         }
 
+        public void SetStoryVariable(string variableName, object value)
+        {
+            _inkStory.variablesState[variableName] = value;
+        }
+
         /// <summary>
         /// Because Ink variable types are immutable, I have the following global variables in Ink:
         /// result_int

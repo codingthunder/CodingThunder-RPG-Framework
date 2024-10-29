@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace CodingThunder.RPGUtilities.Mechanics
 {
-	[RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
 	public class Movement2D : GameStateManaged
 	{
 		public float walkingSpeed = 3;

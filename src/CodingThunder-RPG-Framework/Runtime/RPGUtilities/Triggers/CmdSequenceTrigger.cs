@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace CodingThunder.RPGUtilities.Triggers
 {
-	/// <summary>
-	/// Should be deferred to InkTrigger. Retaining for edge cases,
-	/// but this component is an unwieldy pain in the ass to work with.
-	/// </summary>
-	[RequireComponent(typeof(Collider2D))]
+    /// <summary>
+    /// Should be deferred to InkTrigger. Retaining for edge cases,
+    /// but this component is an unwieldy pain in the ass to work with.
+    /// </summary>
+    [RequireComponent(typeof(Collider2D))]
 	public class CmdSequenceTrigger: GameStateManaged
 	{
 		[Tooltip("Sequences are processed one after the other." +
