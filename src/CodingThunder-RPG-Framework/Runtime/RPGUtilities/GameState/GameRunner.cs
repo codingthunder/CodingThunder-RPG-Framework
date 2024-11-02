@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CodingThunder.RPGUtilities.Cmds;
 
 namespace CodingThunder.RPGUtilities.GameState
 {
@@ -60,6 +61,11 @@ namespace CodingThunder.RPGUtilities.GameState
 			Instance = this;
 
 			DontDestroyOnLoad(gameObject);
+
+			//Instantiating a CmdExpression during gameplay will cause the Cmd Lookup Dictionary to get filled.
+			//Figure doing it here guarantees it won't happen somewhere else when I don't want it to.
+			var junkExpression = new CmdExpression();
+
 
 			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
 			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();

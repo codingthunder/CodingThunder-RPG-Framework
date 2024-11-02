@@ -1,7 +1,9 @@
 
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Reflection;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -18,7 +20,49 @@ namespace CodingThunder.RPGUtilities.Cmds
 	#endif
 	public class CmdExpression
 	{
+		private static Dictionary<string, Type> cmdTypeLookup = null;
+
 		public string expression;
+		public CmdExpression() {
+			if (!Application.isPlaying)
+			{
+				return;
+			}
+			if (cmdTypeLookup == null)
+			{
+				InitializeCmdTypeLookup();
+			}
+		}
+
+		private void InitializeCmdTypeLookup()
+		{
+			cmdTypeLookup = new Dictionary<string, Type>();
+			Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+			foreach (Assembly assembly in assemblies)
+			{
+				Type[] types = assembly.GetTypes();
+
+				var cmdTypes = types.Where(type => typeof(ICmd).IsAssignableFrom(type) && !type.IsAbstract);
+
+				foreach (Type type in cmdTypes)
+				{
+					if (!cmdTypeLookup.ContainsKey(type.Name))
+					{
+						cmdTypeLookup.Add(type.Name, type);
+					}
+					else
+					{
+						Debug.LogWarning($"Duplicate command type name found: {type.Name}. Skipping.");
+					}
+				}
+
+			}
+
+			foreach (var key in  cmdTypeLookup.Keys)
+			{
+				Debug.Log($"Registered command: {key}");
+			}
+		}
 
 		/// <summary>
 		/// Keys can't have labels in them, values can.
@@ -35,12 +79,16 @@ namespace CodingThunder.RPGUtilities.Cmds
 				Debug.LogError($"Missing Cmd Key in CmdExpression: {expression}");
 				return null;
 			}
-			Type type = Type.GetType("CodingThunder.RPGUtilities.Cmds." + args["Cmd"]);
-
-			if (type == null)
+			//Type type = Type.GetType("CodingThunder.RPGUtilities.Cmds." + args["Cmd"]);
+			Type type = null;
+			try
 			{
-				Debug.LogError($"Bad Cmd name in CmdExpression: {expression}");
-				return null;
+				type = cmdTypeLookup[args["Cmd"]];
+			}
+			catch
+			{
+					Debug.LogError($"Bad Cmd name in CmdExpression: {expression}");
+					return null;	
 			}
 
 			ICmd cmd = Activator.CreateInstance(type) as ICmd;

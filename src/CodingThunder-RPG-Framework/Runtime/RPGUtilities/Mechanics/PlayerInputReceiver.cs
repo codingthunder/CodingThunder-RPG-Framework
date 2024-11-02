@@ -42,10 +42,13 @@ namespace CodingThunder.RPGUtilities.Mechanics
 
 			movement2D.Walk2D(dir);
 
-			if (interactor == null) { return; }
+			//Little did I know, I'd already tried to control the interactor here. Whoops. Gonna probably remove this because
+			//while virtually every game is going to have an interactor, how that interactor is manipulated will depend upon
+			//the individual game. As such, the package should provide the interactor, but not tell the game how to arrange it.
+			//if (interactor == null) { return; }
 
-			//Are the parentheses overkill? Yes. Do they make it VERY clear what's happening? Also yes.
-			interactor.transform.position = ((Vector2) transform.position) + (dir.normalized * interactorDistance);
+			////Are the parentheses overkill? Yes. Do they make it VERY clear what's happening? Also yes.
+			//interactor.transform.position = ((Vector2) transform.position) + (dir.normalized * interactorDistance);
 		}
 
 		public void OnInteract(InputValue value)

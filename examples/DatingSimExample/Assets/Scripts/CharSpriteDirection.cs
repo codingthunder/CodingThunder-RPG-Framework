@@ -16,7 +16,16 @@ public class CharSpriteDirection : MonoBehaviour
     public Sprite leftSprite;
     public Sprite rightSprite;
 
-    private Vector2 currentMoveDirection = Vector2.zero;
+    private Vector2 _currentMoveDirection = Vector2.zero;
+
+    //I am about to do something very unholy with this...
+    public Vector2 CurrentSpriteDirection
+    {
+        get
+        {
+            return _currentMoveDirection == Vector2.zero ? Vector2.down : _currentMoveDirection;
+        }
+    }
 
     private void Awake()
     {
@@ -33,7 +42,7 @@ public class CharSpriteDirection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -43,26 +52,28 @@ public class CharSpriteDirection : MonoBehaviour
         //But ask me if I care right now.
         var updatedDir = movement.m_direction;
 
-        if (updatedDir.normalized == currentMoveDirection.normalized )
+        if (updatedDir.normalized == _currentMoveDirection.normalized || updatedDir == Vector2.zero)
         {
             return;
         }
 
-        currentMoveDirection = updatedDir;
+        
 
         var snappedDir = SnapToCardinalDirection(SnapToCardinalDirection(updatedDir));
 
+        _currentMoveDirection = snappedDir;
+
         //Process of elimination. If it's not up, left, or right, it's down.
         var currentSprite = downSprite;
-        if (snappedDir == Vector2.left )
+        if (snappedDir == Vector2.left)
         {
             currentSprite = leftSprite;
         }
-        if (snappedDir == Vector2.right )
+        if (snappedDir == Vector2.right)
         {
             currentSprite = rightSprite;
         }
-        if (snappedDir == Vector2.up )
+        if (snappedDir == Vector2.up)
         {
             currentSprite = upSprite;
         }
@@ -72,6 +83,8 @@ public class CharSpriteDirection : MonoBehaviour
 
     public static Vector2 SnapToCardinalDirection(Vector2 vector)
     {
+        if (vector == Vector2.zero) return Vector2.zero;
+
         // Define the cardinal directions
         Vector2[] directions = { Vector2.up, Vector2.down, Vector2.right, Vector2.left };
 

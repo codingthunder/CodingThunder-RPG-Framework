@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BasicExampleScenes/BasicScene.unity
     guid: e1477d55b06e65d42833208395a8d56d
+  - enabled: 1
+    path: Assets/Scenes/DatingSimScenes/Classroom.unity
+    guid: c7f607401af0e5e4fb6448f9e57dc895
+  - enabled: 1
+    path: Assets/Scenes/DatingSimScenes/Sleep.unity
+    guid: 87f1fac432b51fb4ca971f1caa432198
   m_configObjects: {}
