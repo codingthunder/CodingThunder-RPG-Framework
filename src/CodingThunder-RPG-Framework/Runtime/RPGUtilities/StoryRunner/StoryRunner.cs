@@ -27,10 +27,12 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public event Action onSceneEnd;
 
+        private Action switchToCutsceneCallback;
+
 
         void Awake()
         {
-            inkWrapper = new InKrapper(inkAsset.text, ReceiveNextLineFromInk, ReceiveChoicesFromInk, ReceiveEndSceneFromInk);
+            inkWrapper = new InKrapper(inkAsset.text, ReceiveNextLineFromInk, ReceiveChoicesFromInk, ReceiveEndSceneFromInk, SwitchToCutscene);
             //DontDestroyOnLoad(storyUI.gameObject);
 
             SaveLoad.RegisterSaveLoadCallbacks("Story", GenerateStorySaveData, LoadStorySaveData);
@@ -51,6 +53,15 @@ namespace CodingThunder.RPGUtilities.RPGStory
         void Update()
         {
 
+        }
+
+        /// <summary>
+        /// This should only ever be called once, and from the GameRunner during the Awake method.
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterCutsceneTriggerCallback(Action callback)
+        {
+            this.switchToCutsceneCallback = callback;
         }
 
         private object GenerateStorySaveData()
@@ -216,7 +227,10 @@ namespace CodingThunder.RPGUtilities.RPGStory
             onSceneEnd?.Invoke();
         }
 
-
+        private void SwitchToCutscene()
+        {
+            switchToCutsceneCallback?.Invoke();
+        }
 
 
         private void OnCmdComplete(ICmd cmd)

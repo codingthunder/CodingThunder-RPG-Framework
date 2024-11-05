@@ -1095,37 +1095,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b22d8dfb359a6a4eb69760ede151dc1, type: 3}
---- !u!1 &762385925
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 762385926}
-  m_Layer: 0
-  m_Name: TeacherSpot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &762385926
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762385925}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.31, y: 1.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &781724503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1485,7 +1454,7 @@ Transform:
   m_GameObject: {fileID: 1091627717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.46, y: -1.58, z: 0}
+  m_LocalPosition: {x: 7.46, y: -1.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2589,7 +2558,7 @@ MonoBehaviour:
     repeat: 1
     delay: 0
     cmdExpressions: []
-  inkKnot: Classroom.exit
+  inkKnot: Classroom.Exit
 --- !u!61 &1501174152
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3631,4 +3600,3 @@ SceneRoots:
   - {fileID: 1472230239}
   - {fileID: 308698615}
   - {fileID: 1000489040}
-  - {fileID: 762385926}

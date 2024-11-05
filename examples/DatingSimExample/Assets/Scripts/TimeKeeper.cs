@@ -165,7 +165,7 @@ namespace CodingThunder.DatingSim
 
             try
             {
-                GameRunner.Instance.StartCutscene($"TimeKeeper.{month}_{day}_{hour}");
+                GameRunner.Instance.StartStoryFlow($"TimeKeeper.{month}_{day}_{hour}");
             }
             catch (System.Exception e)
             {

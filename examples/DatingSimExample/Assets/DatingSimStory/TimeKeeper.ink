@@ -20,6 +20,7 @@ VAR time_keeper_initialized = false
 -> default
 
 =default
+->IsCutscene->
     We went default instead.
     This shouldn't happen with the TimeKeeper.
     If the scene doesn't knot or stitch doesn't exist, the game should just continue.
@@ -44,16 +45,17 @@ Cmd=LoadScene:SceneName=Sleep
 
 //Your main knot should route to here when it's ready to start.
 =beginning
-
+    -> IsCutscene ->//Not sure if this line needs to be here, but this is just an example.
     //We're going to use this tunnel to initialize TimeKeeper-specific logic at the start of the game.
     -> InitializeTimeKeeper ->
+    
     
     //TODO: find a better scene for nothing to be happening, or pick a better one.
     Cmd=LoadScene:SceneName=BlackBackdrop
     
-    // -> skip_to_time(4,10,8)
-    To skip the following example, find this line in TimeKeeper.ink and uncomment the line above it.
-    -> skip_to_time(4,10,4)
+    -> skip_to_time(4,10,8)
+    // To skip the following example, find this line in TimeKeeper.ink and uncomment the line above it.
+    // -> skip_to_time(4,10,4)
 
 //// EXAMPLE_SKIP_STITCHES
 //// The following stitches are used to demonstrate the different types of skipping.
@@ -69,19 +71,20 @@ Cmd=LoadScene:SceneName=Sleep
     //For now, we'll do both SetUnityTimeKeeper and the SkipCmd, just to be sure they work.
 
         =4_10_4
+            -> IsCutscene ->
             First, we are using the SkipTime Cmd to jump the game forward to a specific time.
             
             -> skip_to_time(4,10,5)
         
         =4_10_5
+        -> IsCutscene ->
         //By NOT setting the time here, we're assuming the time has been correctly set in the TimeKeeper, which is an ill-advised assumption.
             Next, we are going to use the sleep stitch to fast-forward time.
             
             ->sleep
-            -> END
         
         =4_10_6
-        
+            -> IsCutscene ->
             //Just in case, it's a good idea to set your timeScale back to the correct amount.
             ->SetGameTimeScale(time_scale)->
             
@@ -89,7 +92,7 @@ Cmd=LoadScene:SceneName=Sleep
             //The TimeKeeper mostly acts as an entry point.
             //I'm leaving this here in the example, but in the real narrative, aside from fixing timeScales, you don't want story logic in this file.
             ...And that's it. Those are the two ways to change time from Ink.
-            Today is April 10th, and it is 6:00 AM.
+            Today is April 10th, and it is 6 AM.
             It is time to go to your first day of school.
             Let's skip the part where you get ready and jump straight to class, shall we?
         
@@ -100,7 +103,7 @@ Cmd=LoadScene:SceneName=Sleep
 //// END EXAMPLE STITCHES
 
 =4_10_8
--> SetGameTimeScale(time_scale)->
+-> SetGameTimeScale(time_scale) ->
 -> Classroom.first_day
 
 

@@ -42,7 +42,7 @@ namespace CodingThunder
 
         private void StartInkKnot()
         {
-            GameRunner.Instance.StartCutscene(inkKnot);
+            GameRunner.Instance.StartStoryFlow(inkKnot);
         }
 
         private void OnCompleteTriggerSequence(CmdSequence sequence)

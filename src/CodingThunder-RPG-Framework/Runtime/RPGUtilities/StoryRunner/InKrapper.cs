@@ -13,18 +13,24 @@ namespace CodingThunder.RPGUtilities.RPGStory
     public class InKrapper
     {
         Story _inkStory;
-        Action narrate;//Why is this here again?
+        //Action narrate;//Why is this here again?
 
         public Action<List<Choice>> ChoiceCallback;
         public Action<string, bool> ContinueCallback;
         public Action EndSceneCallback;
+        public Action ContinueAsCutsceneCallback;
 
-        public InKrapper(string storyText, Action<string, bool> continueCallback, Action<List<Choice>> choiceCallback, Action endSceneCallback)
+        public InKrapper(string storyText,
+            Action<string, bool> continueCallback,
+            Action<List<Choice>> choiceCallback,
+            Action endSceneCallback,
+            Action continueAsCutsceneCallback)
         {
             ChoiceCallback = choiceCallback;
             ContinueCallback = continueCallback;
             EndSceneCallback = endSceneCallback;
             _inkStory = new Story(storyText);
+            ContinueAsCutsceneCallback = continueAsCutsceneCallback;
         }
 
         public string GetStorySaveDataJson()
@@ -39,6 +45,11 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public void BeginStory()
         {
+
+            _inkStory.ResetState();
+
+            _inkStory.BindExternalFunction("isCutscene", ContinueAsCutsceneCallback);
+
             _inkStory.ChoosePathString("main");
             Next();
         }

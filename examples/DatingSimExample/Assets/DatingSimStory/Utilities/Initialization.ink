@@ -24,3 +24,12 @@ VAR result_bool = false
 VAR player_name = "Damien"
 VAR player_object_name = ""
 VAR player_spawn_ref = ""
+
+VAR love_interest_1_name = "Ayane"
+VAR love_interest_1_affection = 0
+
+// Keeping these together for now. If we add more utility functions, will likely have to group differently.
+EXTERNAL isCutscene()
+===IsCutscene===
+~ isCutscene()
+->->

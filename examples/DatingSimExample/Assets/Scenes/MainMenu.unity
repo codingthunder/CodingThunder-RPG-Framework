@@ -993,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3974560425225219948, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
       propertyPath: debugMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3974560425225219948, guid: 434fc0a7fa49a774197f47ac4326825b, type: 3}
       propertyPath: registeredClasses.Array.size

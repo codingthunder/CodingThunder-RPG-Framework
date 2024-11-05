@@ -73,6 +73,8 @@ namespace CodingThunder.RPGUtilities.GameState
 
 			OnChangeGameState += ChangeGameState;
 
+			storyRunner.RegisterCutsceneTriggerCallback(NowInACutsceneState);
+
 			SaveLoad.RegisterSaveLoadCallbacks("Metadata", SaveGameMetadata, LoadGameMetadata);
 
 			RegisterNamespacesAndClasses();
@@ -139,7 +141,7 @@ namespace CodingThunder.RPGUtilities.GameState
 
 			if (!string.IsNullOrWhiteSpace(skipToSceneOnStart))
 			{
-				StartCutscene(skipToSceneOnStart);
+				StartStoryFlow(skipToSceneOnStart);
 			}
 		}
 
@@ -149,10 +151,24 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		}
 
-		public void StartCutscene(string cutsceneId)
+		public void StartStoryFlow(string cutsceneId)
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			//OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
 			storyRunner.GoToChapter(cutsceneId);
+		}
+
+
+		/// <summary>
+		/// Meant to pretty much only be used by the StoryRunner as a callback.
+		/// There IS a better way of doing this, but I'm lazy.
+		/// </summary>
+		private void NowInACutsceneState()
+		{
+			if (GameState == GameStateEnum.CUTSCENE)
+			{
+				return;
+			}
+			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
 		}
 
 		private void ResumePlayFromCutscene()
