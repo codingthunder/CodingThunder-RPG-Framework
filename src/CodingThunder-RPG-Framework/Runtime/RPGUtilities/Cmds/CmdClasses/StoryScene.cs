@@ -36,7 +36,7 @@ namespace CodingThunder.RPGUtilities.Cmds
             }
 			
 
-			GameRunner.Instance.StartCutscene(SceneName);
+			GameRunner.Instance.StartStoryFlow(SceneName);
 			completionCallback.Invoke(this);
 			yield break;
 		}

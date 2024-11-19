@@ -124,7 +124,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <returns></returns>
 		public static Vector2 AngleToVector2(float angle)
 		{
-			float radians = (angle - 90) * Mathf.Deg2Rad;
+			float radians = (angle + 90) * Mathf.Deg2Rad;
 
 			return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 		}

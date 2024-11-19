@@ -52,6 +52,10 @@ namespace CodingThunder.RPGUtilities.Cmds
 			{
 				Dist = new RPGRef<float>() { ReferenceId = Parameters["Dist"] };
 			}
+			if (Speed == null)
+			{
+				Speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
+			}
 			//float xDir = new RPGRef<float>() { ReferenceId = Parameters["X"] };
 			//float yDir = new RPGRef<float>() { ReferenceId = Parameters["Y"] };
 			//float speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
@@ -75,6 +79,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 			movement2D.m_direction = direction;
 			movement2D.m_speed = Speed.GetValueOrDefault();
 
+			Vector2 originalPosition = movement2D.transform.position;
 			float distanceMoved = 0f;
 
 			while (distanceMoved < Dist.GetValueOrDefault())
@@ -85,10 +90,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 					continue;
 				}
 				yield return new WaitForFixedUpdate();
+
+				distanceMoved =  ((Vector2) movement2D.transform.position - originalPosition).magnitude;
 			}
 
 			movement2D.m_direction = new Vector2(0, 0);
 			movement2D.m_speed = existing_speed;
+			//movement2D.m_speed = 0f;
+			Debug.LogWarning("Completed MoveCmd.");
 			completionCallback.Invoke(this);
 			yield break;
 		}

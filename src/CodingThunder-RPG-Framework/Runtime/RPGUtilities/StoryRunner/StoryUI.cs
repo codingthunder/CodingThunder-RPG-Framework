@@ -33,7 +33,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
             //DontDestroyOnLoad(transform.parent);
 
             //TODO: This feels hackish. There has to be a better way to handle this.
-            DontDestroyOnLoad(EventSystem.current);
+            //DontDestroyOnLoad(EventSystem.current);
         }
 
         // Start is called before the first frame update

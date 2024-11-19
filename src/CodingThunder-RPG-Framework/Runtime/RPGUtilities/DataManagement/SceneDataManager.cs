@@ -22,6 +22,7 @@ public class SceneDataManager : MonoBehaviour
 		if (Instance != null)
         {
             Destroy(this);
+            return;
         }
 
         Instance = this;
@@ -76,7 +77,53 @@ public class SceneDataManager : MonoBehaviour
         }
 
         var gObject = GameObject.Find(id_chain[0]);
+
+        if (gObject == null)
+        {
+            gObject = FindInactiveObjectByName(id_chain[0]);
+        }
+
         id_chain.RemoveAt(0);
         return gObject;
+    }
+
+    /// <summary>
+    /// Breadth-first search. Long-term, we should probably just register the damn objects in a dictionary.
+    /// But get it working first, then worry about getting it working fast.
+    /// Why the hell Unity doesn't include inactive objects in GameObject.Find is beyond me.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    private static GameObject FindInactiveObjectByName(string name)
+    {
+        // Get all root objects in the active scene
+        GameObject[] rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+        Queue<GameObject> queue = new Queue<GameObject>();
+
+        // Enqueue all root objects
+        foreach (GameObject rootObject in rootObjects)
+        {
+            queue.Enqueue(rootObject);
+        }
+
+        // Perform a breadth-first search
+        while (queue.Count > 0)
+        {
+            GameObject current = queue.Dequeue();
+
+            // Check if the current object's name matches
+            if (current.name == name)
+            {
+                return current;
+            }
+
+            // Enqueue all children of the current object
+            foreach (Transform child in current.transform)
+            {
+                queue.Enqueue(child.gameObject);
+            }
+        }
+
+        return null; // Object not found
     }
 }

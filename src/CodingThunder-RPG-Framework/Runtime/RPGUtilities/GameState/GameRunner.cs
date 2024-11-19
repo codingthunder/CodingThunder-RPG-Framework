@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CodingThunder.RPGUtilities.Cmds;
 
 namespace CodingThunder.RPGUtilities.GameState
 {
@@ -23,8 +24,11 @@ namespace CodingThunder.RPGUtilities.GameState
 	{
 		public static GameRunner Instance { get; private set; }
 
+		[HideInInspector]
 		public GameDataManager gameDataManager;
+		[HideInInspector]
 		public SceneDataManager sceneDataManager;
+		[HideInInspector]
 		public StoryRunner storyRunner;
 
 		public bool debugMode;
@@ -32,6 +36,7 @@ namespace CodingThunder.RPGUtilities.GameState
 		[SerializeField]
 		[Header("Will skip game load.")]
 		private string skipToSceneOnStart;
+		[field: SerializeField]
 		public GameStateEnum GameState { get; private set; }
 		public event Action<GameStateEnum> OnChangeGameState;
 
@@ -49,23 +54,30 @@ namespace CodingThunder.RPGUtilities.GameState
 				UnityEngine.Debug.Log($"Changing GameState to: {GameState}");
 			}
 			GameState = gameState;
+			OnChangeGameState?.Invoke(GameState);
 		}
 
 		private void Awake()
 		{
 			if (Instance != null)
 			{
-				Destroy(this);
+				Destroy(gameObject);
+				return;
 			}
 			Instance = this;
 
 			DontDestroyOnLoad(gameObject);
 
+			//Instantiating a CmdExpression during gameplay will cause the Cmd Lookup Dictionary to get filled.
+			//Figure doing it here guarantees it won't happen somewhere else when I don't want it to.
+			var junkExpression = new CmdExpression();
+
+
 			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
 			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();
 			if (storyRunner == null) storyRunner = GetComponent<StoryRunner>();
 
-			OnChangeGameState += ChangeGameState;
+			storyRunner.RegisterCutsceneTriggerCallback(NowInACutsceneState);
 
 			SaveLoad.RegisterSaveLoadCallbacks("Metadata", SaveGameMetadata, LoadGameMetadata);
 
@@ -129,11 +141,11 @@ namespace CodingThunder.RPGUtilities.GameState
 			storyRunner.onSceneEnd += ResumePlayFromCutscene;
 
 
-			OnChangeGameState.Invoke(GameStateEnum.PAUSED);
+			ChangeGameState(GameState);
 
 			if (!string.IsNullOrWhiteSpace(skipToSceneOnStart))
 			{
-				StartCutscene(skipToSceneOnStart);
+				StartStoryFlow(skipToSceneOnStart);
 			}
 		}
 
@@ -143,10 +155,24 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		}
 
-		public void StartCutscene(string cutsceneId)
+		public void StartStoryFlow(string cutsceneId)
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			//ChangeGameState(GameStateEnum.CUTSCENE);
 			storyRunner.GoToChapter(cutsceneId);
+		}
+
+
+		/// <summary>
+		/// Meant to pretty much only be used by the StoryRunner as a callback.
+		/// There IS a better way of doing this, but I'm lazy.
+		/// </summary>
+		private void NowInACutsceneState()
+		{
+			if (GameState == GameStateEnum.CUTSCENE)
+			{
+				return;
+			}
+			ChangeGameState(GameStateEnum.CUTSCENE);
 		}
 
 		private void ResumePlayFromCutscene()
@@ -158,15 +184,15 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		public void NewGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			ChangeGameState(GameStateEnum.CUTSCENE);
 			storyRunner.NewStory();
 		}
 
 		public void LoadGame(string saveName)
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.LOADING);
+			ChangeGameState(GameStateEnum.LOADING);
 			SaveLoad.LoadGame(saveName);
-			//OnChangeGameState?.Invoke(GameState);
+			//ChangeGameState(GameState);
 			//storyRunner.Next();
 		}
 
@@ -177,17 +203,16 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		public void PauseGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.PAUSED);
+			ChangeGameState(GameStateEnum.PAUSED);
 		}
 
 		public void UnpauseGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.PLAY);
+			ChangeGameState(GameStateEnum.PLAY);
 		}
 
 		private void OnDestroy()
 		{
-			OnChangeGameState -= ChangeGameState;
 			SaveLoad.DeregisterSaveLoadCallbacks("Metadata");
 		}
 	}

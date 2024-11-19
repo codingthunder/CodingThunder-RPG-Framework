@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - Player
+  - NPCs
+  - Items
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 4243911683
+    locked: 0
+  - name: Wall
+    uniqueID: 242697709
+    locked: 0
+  - name: Deco
+    uniqueID: 692752801
+    locked: 0
+  - name: Player
+    uniqueID: 398817523
+    locked: 0
+  - name: Overhead
+    uniqueID: 3100486579
+    locked: 0

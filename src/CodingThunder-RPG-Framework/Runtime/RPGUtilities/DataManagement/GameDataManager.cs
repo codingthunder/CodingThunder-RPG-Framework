@@ -27,6 +27,7 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			if (Instance != null)
 			{
 				Destroy(this);
+				return;
 			}
 			Instance = this;
 

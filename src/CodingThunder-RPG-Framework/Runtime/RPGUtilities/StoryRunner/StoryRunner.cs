@@ -8,6 +8,7 @@ using CodingThunder.RPGUtilities.Cmds;
 using System;
 using CodingThunder.RPGUtilities.SaveData;
 using CodingThunder.RPGUtilities.GameState;
+using System.Text.RegularExpressions;
 
 namespace CodingThunder.RPGUtilities.RPGStory
 {
@@ -27,10 +28,12 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public event Action onSceneEnd;
 
+        private Action switchToCutsceneCallback;
+
 
         void Awake()
         {
-            inkWrapper = new InKrapper(inkAsset.text, ReceiveNextLineFromInk, ReceiveChoicesFromInk, ReceiveEndSceneFromInk);
+            inkWrapper = new InKrapper(inkAsset.text, ReceiveNextLineFromInk, ReceiveChoicesFromInk, ReceiveEndSceneFromInk, SwitchToCutscene);
             //DontDestroyOnLoad(storyUI.gameObject);
 
             SaveLoad.RegisterSaveLoadCallbacks("Story", GenerateStorySaveData, LoadStorySaveData);
@@ -51,6 +54,15 @@ namespace CodingThunder.RPGUtilities.RPGStory
         void Update()
         {
 
+        }
+
+        /// <summary>
+        /// This should only ever be called once, and from the GameRunner during the Awake method.
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RegisterCutsceneTriggerCallback(Action callback)
+        {
+            this.switchToCutsceneCallback = callback;
         }
 
         private object GenerateStorySaveData()
@@ -170,7 +182,9 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
 
             //Parse text
-            var parts = line.Split(':');
+            var parts = Regex.Split(line, @"(?<!:):(?!:)")
+                 .Select(part => part.Replace("::", ":")) // Replace escaped colons (::) with actual colons
+                 .ToArray();
 
             if (parts.Length == 0)
             {
@@ -216,7 +230,10 @@ namespace CodingThunder.RPGUtilities.RPGStory
             onSceneEnd?.Invoke();
         }
 
-
+        private void SwitchToCutscene()
+        {
+            switchToCutsceneCallback?.Invoke();
+        }
 
 
         private void OnCmdComplete(ICmd cmd)
@@ -330,6 +347,11 @@ namespace CodingThunder.RPGUtilities.RPGStory
         public void GoToChapter(string chapterID)
         {
             inkWrapper.JumpToChapter(chapterID);
+        }
+
+        public void SetStoryVariable(string name, object value)
+        {
+            inkWrapper.SetStoryVariable(name, value);
         }
 
         //public void PromptInput(string prompt)
