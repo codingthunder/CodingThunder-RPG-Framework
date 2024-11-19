@@ -35,6 +35,7 @@ namespace CodingThunder
                 StartInkKnot();
                 return;
             }
+            Debug.LogWarning("Running trigger.");
 
             sequenceRunning = true;
             StartCoroutine(preInkSequence.ExecuteCmdSequence(this, OnCompleteTriggerSequence, OnCancelTriggerSequence));

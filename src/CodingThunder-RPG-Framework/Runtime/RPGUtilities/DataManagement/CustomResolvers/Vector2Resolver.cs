@@ -15,6 +15,7 @@ namespace CodingThunder.RPGUtilities.DataManagement
 
 			var xy = reference.Split(',');
 
+			//This expects you to be writing in the following format: (x,y)
 			var strippedXString = xy[0].Substring(1).Trim();
 			var strippedYString = xy[1].Substring(1, xy[1].Length - 2).Trim();
 

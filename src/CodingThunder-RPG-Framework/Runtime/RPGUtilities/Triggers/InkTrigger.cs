@@ -19,6 +19,7 @@ namespace CodingThunder.RPGUtilities.Triggers
         
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            Debug.Log("Hitting trigger.");
             RunTrigger(collision);
         }
 

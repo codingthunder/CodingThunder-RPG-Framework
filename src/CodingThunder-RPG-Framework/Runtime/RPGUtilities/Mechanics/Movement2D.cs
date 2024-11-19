@@ -43,13 +43,16 @@ namespace CodingThunder.RPGUtilities.Mechanics
 		{
 			if (IsActive)
 			{
-				rb.isKinematic = false;
+				//rb.isKinematic = false;
+				
 				OnFixedUpdate();
 				return;
 			}
-			rb.isKinematic = true;
+            m_speed = 0f;
+			OnFixedUpdate();
+            //rb.isKinematic = true;
 
-		}
+        }
 
 		public void Walk2D(Vector2 direction)
 		{

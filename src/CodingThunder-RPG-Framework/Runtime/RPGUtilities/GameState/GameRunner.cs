@@ -24,8 +24,11 @@ namespace CodingThunder.RPGUtilities.GameState
 	{
 		public static GameRunner Instance { get; private set; }
 
+		[HideInInspector]
 		public GameDataManager gameDataManager;
+		[HideInInspector]
 		public SceneDataManager sceneDataManager;
+		[HideInInspector]
 		public StoryRunner storyRunner;
 
 		public bool debugMode;
@@ -33,6 +36,7 @@ namespace CodingThunder.RPGUtilities.GameState
 		[SerializeField]
 		[Header("Will skip game load.")]
 		private string skipToSceneOnStart;
+		[field: SerializeField]
 		public GameStateEnum GameState { get; private set; }
 		public event Action<GameStateEnum> OnChangeGameState;
 
@@ -50,13 +54,15 @@ namespace CodingThunder.RPGUtilities.GameState
 				UnityEngine.Debug.Log($"Changing GameState to: {GameState}");
 			}
 			GameState = gameState;
+			OnChangeGameState?.Invoke(GameState);
 		}
 
 		private void Awake()
 		{
 			if (Instance != null)
 			{
-				Destroy(this);
+				Destroy(gameObject);
+				return;
 			}
 			Instance = this;
 
@@ -70,8 +76,6 @@ namespace CodingThunder.RPGUtilities.GameState
 			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
 			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();
 			if (storyRunner == null) storyRunner = GetComponent<StoryRunner>();
-
-			OnChangeGameState += ChangeGameState;
 
 			storyRunner.RegisterCutsceneTriggerCallback(NowInACutsceneState);
 
@@ -137,7 +141,7 @@ namespace CodingThunder.RPGUtilities.GameState
 			storyRunner.onSceneEnd += ResumePlayFromCutscene;
 
 
-			OnChangeGameState.Invoke(GameStateEnum.PAUSED);
+			ChangeGameState(GameState);
 
 			if (!string.IsNullOrWhiteSpace(skipToSceneOnStart))
 			{
@@ -153,7 +157,7 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		public void StartStoryFlow(string cutsceneId)
 		{
-			//OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			//ChangeGameState(GameStateEnum.CUTSCENE);
 			storyRunner.GoToChapter(cutsceneId);
 		}
 
@@ -168,7 +172,7 @@ namespace CodingThunder.RPGUtilities.GameState
 			{
 				return;
 			}
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			ChangeGameState(GameStateEnum.CUTSCENE);
 		}
 
 		private void ResumePlayFromCutscene()
@@ -180,15 +184,15 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		public void NewGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.CUTSCENE);
+			ChangeGameState(GameStateEnum.CUTSCENE);
 			storyRunner.NewStory();
 		}
 
 		public void LoadGame(string saveName)
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.LOADING);
+			ChangeGameState(GameStateEnum.LOADING);
 			SaveLoad.LoadGame(saveName);
-			//OnChangeGameState?.Invoke(GameState);
+			//ChangeGameState(GameState);
 			//storyRunner.Next();
 		}
 
@@ -199,17 +203,16 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		public void PauseGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.PAUSED);
+			ChangeGameState(GameStateEnum.PAUSED);
 		}
 
 		public void UnpauseGame()
 		{
-			OnChangeGameState?.Invoke(GameStateEnum.PLAY);
+			ChangeGameState(GameStateEnum.PLAY);
 		}
 
 		private void OnDestroy()
 		{
-			OnChangeGameState -= ChangeGameState;
 			SaveLoad.DeregisterSaveLoadCallbacks("Metadata");
 		}
 	}

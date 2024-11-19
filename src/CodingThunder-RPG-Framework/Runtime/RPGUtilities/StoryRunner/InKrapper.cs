@@ -31,6 +31,8 @@ namespace CodingThunder.RPGUtilities.RPGStory
             EndSceneCallback = endSceneCallback;
             _inkStory = new Story(storyText);
             ContinueAsCutsceneCallback = continueAsCutsceneCallback;
+
+            _inkStory.BindExternalFunction("isCutscene", ContinueAsCutsceneCallback);
         }
 
         public string GetStorySaveDataJson()
@@ -47,9 +49,6 @@ namespace CodingThunder.RPGUtilities.RPGStory
         {
 
             _inkStory.ResetState();
-
-            _inkStory.BindExternalFunction("isCutscene", ContinueAsCutsceneCallback);
-
             _inkStory.ChoosePathString("main");
             Next();
         }

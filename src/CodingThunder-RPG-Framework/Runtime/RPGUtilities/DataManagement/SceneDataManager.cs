@@ -22,6 +22,7 @@ public class SceneDataManager : MonoBehaviour
 		if (Instance != null)
         {
             Destroy(this);
+            return;
         }
 
         Instance = this;

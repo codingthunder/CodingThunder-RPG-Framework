@@ -8,6 +8,7 @@ using CodingThunder.RPGUtilities.Cmds;
 using System;
 using CodingThunder.RPGUtilities.SaveData;
 using CodingThunder.RPGUtilities.GameState;
+using System.Text.RegularExpressions;
 
 namespace CodingThunder.RPGUtilities.RPGStory
 {
@@ -181,7 +182,9 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
 
             //Parse text
-            var parts = line.Split(':');
+            var parts = Regex.Split(line, @"(?<!:):(?!:)")
+                 .Select(part => part.Replace("::", ":")) // Replace escaped colons (::) with actual colons
+                 .ToArray();
 
             if (parts.Length == 0)
             {

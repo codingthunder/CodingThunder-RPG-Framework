@@ -96,6 +96,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 			movement2D.m_direction = new Vector2(0, 0);
 			movement2D.m_speed = existing_speed;
+			//movement2D.m_speed = 0f;
+			Debug.LogWarning("Completed MoveCmd.");
 			completionCallback.Invoke(this);
 			yield break;
 		}

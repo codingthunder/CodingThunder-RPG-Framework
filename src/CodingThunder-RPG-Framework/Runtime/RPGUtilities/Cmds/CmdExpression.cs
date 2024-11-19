@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -72,9 +73,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <returns></returns>
 		public ICmd ToCmd()
 		{
-			var args = expression.Split(':').ToDictionary(x => x.Split('=')[0], x => x.Split('=')[1]);
+            var args = Regex.Split(expression, @"(?<!:):(?!:)")
+                .ToDictionary(
+                    x => Regex.Split(x, @"(?<!<)(?<!>)(?<!!)=(?!=)")[0],
+                    x => Regex.Split(x, @"(?<!<)(?<!>)(?<!!)=(?!=)")[1].Replace(@"::", ":") // Replace escaped colons with actual colons
+                );
 
-			if (!args.ContainsKey("Cmd"))
+            if (!args.ContainsKey("Cmd"))
 			{
 				Debug.LogError($"Missing Cmd Key in CmdExpression: {expression}");
 				return null;

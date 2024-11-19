@@ -24,7 +24,7 @@ namespace CodingThunder.RPGUtilities.GameState
         // Start is called before the first frame update
         void Start()
         {
-
+            //Debug.LogWarning($"component {gameObject.name}.{this.GetType().Name} had its Start called. Current GameRunner is {GameRunner.Instance.gameObject.name} and Current GameState is {GameRunner.Instance.GameState}.");
             OnGameStateChange(GameRunner.Instance.GameState);
             if (!IsActive)
             {
@@ -71,7 +71,10 @@ namespace CodingThunder.RPGUtilities.GameState
         {
             IsActive = whitelistedStates.Contains(state);
 
-            Debug.Log($"{gameObject.name} has received GameState {state} and IsActive: {IsActive}");
+            if (GameRunner.Instance.debugMode)
+            {
+                Debug.Log($"{gameObject.name} has received GameState {state} and IsActive: {IsActive}");
+            }
 
             HandleGameStateChange(state);
         }

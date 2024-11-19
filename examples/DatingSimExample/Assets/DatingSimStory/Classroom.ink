@@ -30,7 +30,7 @@ Cmd=CamFollow:Target="{player_object_name}"
 ->IsCutscene->
 ~temp playerRef = "$$Scene.PlayerCharacter"
 ~temp pos = "transform.position"
-???: Hey! Wait! Don't go out! It's unsafe! Wild Po---
+???: Hey! Wait! Don't go out:: It's unsafe! Wild Po---
 ???: I've just been informed by my lawyer that I'm not allowed to make that reference.
 ???: Get your stinky butt back inside the classroom!
 Cmd=Move:Target=$$Scene.PlayerCharacter:Dir=0:Speed=3:Dist=2
@@ -39,16 +39,14 @@ Cmd=Spawn:Target=$$Scene.Teacher
 Cmd=Move:Target=$$Scene.PlayerCharacter:Dir=0:Speed=3:Dist=2 # auto
 Cmd=Move:Target=$$Scene.Teacher:Dir=0:Speed=3:Dist=2 # auto
 Mr. Pickles: I can't believe you planned to just walk out of class like that. Get back in your seat.
-Cmd=Wait:Dur=2
-Mr. Pickles: Well?
 Cmd=MoveTo:Target={playerRef}:Position=$$Scene.PlayerRow.{pos}:Speed=1.0
-//Add teacher spot here.
 Cmd=MoveTo:Target=$$Scene.Teacher:Position=$$Scene.TeacherSpot.{pos}:Speed=3.0 # auto
 Cmd=MoveTo:Target={playerRef}:Position=$$Scene.NextToDesk.{pos}:Speed=1.0
 Cmd=Despawn:Target={playerRef}
 Cmd=Despawn:Target=EmptyDesk
 Cmd=Spawn:Target=PlayerAtDesk
-Mr. Pickles: Good. Now, for today's lesson, we're going to learn about common tropes in literature, starting with... # auto
+
+Mr. Pickles: Good. Now, for today's lesson:: we're going to learn about common tropes in literature, starting with...
 //This is when you define the girl's name.
 As Mr. Pickles gets going with his lecture, the girl behind you taps you on the shoulder and begins to whisper so that only you can hear.
 {love_interest_1_name}: Were you really about to just walk out?
@@ -90,8 +88,8 @@ Cmd=LoadScene:SceneName=Classroom
 //Initialize scene below.
 
 //LoadPrefab returns the name of the instanced object as a string, so it is accessible as a string.
-Cmd=LoadPrefab:PrefabId="PlayerCharacter":Enabled=true:Pos={player_spawn_ref}:Name="PlayerCharacter"
-~ player_object_name = result_string
+// Cmd=LoadPrefab:PrefabId="PlayerCharacter":Enabled=true:Pos={player_spawn_ref}:Name="PlayerCharacter"
+~ player_object_name = "PlayerCharacter"
 
 Cmd=CamFollow:Target="{player_object_name}"
 ->->

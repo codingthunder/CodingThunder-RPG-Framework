@@ -17,7 +17,7 @@ public class TimeDisplay : MonoBehaviour
     {
         if (Instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         if (timeKeeper == null)

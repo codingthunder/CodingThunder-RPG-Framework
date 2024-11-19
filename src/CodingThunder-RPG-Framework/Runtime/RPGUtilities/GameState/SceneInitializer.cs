@@ -7,12 +7,12 @@ using UnityEngine;
 /// <summary>
 /// Likely going to deprecate this class out as well. Most of what it does can be handled inside of Ink.
 /// </summary>
-public class SceneInitializer : GameStateManaged
+public class SceneInitializer : MonoBehaviour
 {
-    public List<CmdSequence> startupSequences = new();
+    public GameRunner gameRunnerPrefab;
 
     // Start is called before the first frame update
-    protected override void OnStart()
+    void Awake()
     {
         ExecuteInitialization();
     }
@@ -21,19 +21,10 @@ public class SceneInitializer : GameStateManaged
     public void ExecuteInitialization()
     {
         Debug.Log("Initializing scene.");
-        foreach (var seq in startupSequences)
+        if (GameRunner.Instance != null)
         {
-            StartCoroutine(seq.ExecuteCmdSequence(this, OnInitializationComplete, OnSequenceCancelled));
+            GameObject.Instantiate(gameRunnerPrefab);
         }
     }
 
-    private void OnInitializationComplete(CmdSequence cmdSequence)
-    {
-        //Something, I don't know.
-    }
-
-    private void OnSequenceCancelled(CmdSequence cmdSequence)
-    {
-        //Another something, I don't know.
-    }
 }

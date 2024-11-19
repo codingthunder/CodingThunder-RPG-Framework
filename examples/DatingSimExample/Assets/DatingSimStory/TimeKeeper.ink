@@ -50,8 +50,10 @@ Cmd=LoadScene:SceneName=Sleep
     -> InitializeTimeKeeper ->
     
     
+    
     //TODO: find a better scene for nothing to be happening, or pick a better one.
     Cmd=LoadScene:SceneName=BlackBackdrop
+    This is a quick test.
     
     -> skip_to_time(4,10,8)
     // To skip the following example, find this line in TimeKeeper.ink and uncomment the line above it.
