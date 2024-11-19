@@ -3,6 +3,8 @@ The CTRPGF is an RPG Framework with a focus on story-driven game control and dat
 
 Right now, the Framework is still in very, very early development. It's going to have plenty of bugs, and it will be some time before it's considered feature-complete. But I wanted to get the ball rolling on it and let people take a crack at it if they want to.
 
+**FULL DISCLOSURE**: Significant portions of this project have been written with the aid of ChatGPT. While I'm confident I could have written this codebase myself, using LLM's to assist me with coding has improved the speed of development and helped remove the more monotonous elements of software development. With that said, unless otherwise noted, all provided art was made by me. Additionally, I have not used, nor do I ever intend to use, LLM's for the purposes of writing stories in either novel or game format. Writing is perhaps my single greatest passion, and there's no way I'm outsourcing that to a dang robot.
+
 > [!IMPORTANT]
 > This project is in early, early development. That means there aren't many railguards for developers. While you do not need to know how to code in order to use the framework, you will need to be able to write precise syntax. Capitalization matters. Attention to detail matters. And obviously, if you wish to add any extra mechanics on top of the engine, you'll need to code that yourself (or pay somebody to do it for you).
 
