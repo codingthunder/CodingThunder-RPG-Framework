@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DungeonScenes/DungeonHall001.unity
     guid: 18a2313f7899dba4d9fe3f39fffb8ed8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BasicExampleScenes/BasicScene.unity
     guid: e1477d55b06e65d42833208395a8d56d
   - enabled: 1
