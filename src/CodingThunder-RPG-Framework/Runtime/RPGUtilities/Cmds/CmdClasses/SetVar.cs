@@ -23,6 +23,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 		{
 			public void SetValueFromRefLookup(string referenceId);
 			public void SetValue(object value);
+
+			public object GetValue();
 		}
 
 		protected class SetFieldMetadata : ISetVarMetadata
@@ -48,6 +50,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 			public void SetValue(object value)
 			{
 				fieldInfo.SetValue(parent, value);
+			}
+
+			public object GetValue()
+			{
+				return fieldInfo.GetValue(parent);
 			}
 		}
 
@@ -76,6 +83,11 @@ namespace CodingThunder.RPGUtilities.Cmds
             {
                 propInfo.SetValue(parent, value);
             }
+
+			public object GetValue()
+			{
+				return propInfo.GetValue(parent);
+			}
         }
 
 		protected ISetVarMetadata BuildVarMetadata(string referenceId)
@@ -119,7 +131,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public bool Suspended { get; set; }
 
-		public IEnumerator ExecuteCmd(Action<ICmd> OnFinishCallback)
+		public virtual IEnumerator ExecuteCmd(Action<ICmd> OnFinishCallback)
 		{
 			while (Suspended)
 			{
