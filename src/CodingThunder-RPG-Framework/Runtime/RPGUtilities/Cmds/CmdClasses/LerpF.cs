@@ -12,7 +12,7 @@ namespace CodingThunder.RPGUtilities.Cmds
     /// Parameters["Value"] for target's end value.
     /// Parameters["Dur"] for how long it takes to Lerp.
     /// </summary>
-    public class LerpF : SetVar
+    public class LerpF : SetVar, ICmd
     {
         public override IEnumerator ExecuteCmd(Action<ICmd> OnFinishCallback)
         {

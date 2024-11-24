@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using UnityEngine.U2D;
 
 namespace CodingThunder.RPGUtilities.Cmds
 {
@@ -43,7 +44,6 @@ namespace CodingThunder.RPGUtilities.Cmds
 			public void SetValueFromRefLookup(string referenceId)
 			{
 				var value = LookupResolver.Instance.Resolve(referenceId, this.fieldType);
-
 				fieldInfo.SetValue(parent, value);
             }
 
@@ -150,13 +150,13 @@ namespace CodingThunder.RPGUtilities.Cmds
 			}
 			catch (ArgumentException)
 			{
-				Debug.LogError($"Failed to find target variable's parent in {sourceString}.");
+				Debug.LogError($"Failed to find target variable's parent in {targetString}.");
 				OnFinishCallback.Invoke(this);
 				yield break;
 			}
 			catch (MemberAccessException)
 			{
-				Debug.LogError($"Found parent, but couldn't find field or property from {sourceString}");
+				Debug.LogError($"Found parent, but couldn't find field or property from {targetString}");
 				OnFinishCallback.Invoke(this);
 			}
 

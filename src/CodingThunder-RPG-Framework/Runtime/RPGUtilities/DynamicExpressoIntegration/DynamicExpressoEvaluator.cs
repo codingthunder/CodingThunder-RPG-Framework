@@ -39,11 +39,18 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		// Method to register all types from a given namespace
 		public void RegisterNamespace(string ns)
 		{
-			// Get all types in the current assembly that belong to the given namespace
-			var types = Assembly.GetExecutingAssembly().GetTypes()
-								.Where(t => t.Namespace == ns && t.IsClass);
 
-			foreach (var type in types)
+            // Get all types in the current assembly that belong to the given namespace
+            //var types = Assembly.GetExecutingAssembly().GetTypes()
+            //					.Where(t => t.Namespace == ns && (t.IsClass || (t.IsValueType && !t.IsPrimitive))).ToArray();
+
+            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            var types = allAssemblies.SelectMany(assembly => assembly.GetTypes())
+                                     .Where(t => t.Namespace == ns && (t.IsClass || (t.IsValueType && !t.IsPrimitive)))
+                                     .ToArray();
+
+            foreach (var type in types)
 			{
 				RegisterTypeIfNotRegistered(type);
 			}
@@ -60,6 +67,10 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		{
 			//_interpreter.SetFunction("GetComponentInChildren",
 			//	new Func<GameObject, Type, Component>((go, type) => go.GetComponentInChildren(type)));
+			if (lookupString.Contains(')'))
+			{
+				Debug.Log(lookupString);
+			}
 
 			if (target == null)
 			{

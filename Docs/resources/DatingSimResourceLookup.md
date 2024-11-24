@@ -5,3 +5,6 @@ Please note that you'll need to use a program like audacity to chop up the audio
 
 sfx/crickets.mp3: https://pixabay.com/sound-effects/cricket-250777/
 sfx/truck.mp3: https://pixabay.com/sound-effects/hyundai-hd1000-tractor-truck-engine-sound-42636/
+
+bgm/opening.mp3: https://pixabay.com/music/modern-classical-tender-sentimental-piano-251199/
+bgm/climax.mp3: https://pixabay.com/music/modern-classical-sentimental-inspiring-piano-254396/

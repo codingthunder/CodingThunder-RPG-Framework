@@ -15,7 +15,29 @@ using CodingThunder.RPGUtilities.DataManagement;
 /// </summary>
 public class SceneDataManager : MonoBehaviour
 {
+    private HashSet<GameObject> nonDestroyedObjects = new HashSet<GameObject>();
+
     public static SceneDataManager Instance;
+
+    public void RegisterDontDestroyOnLoad(GameObject otherObject)
+    {
+        if (nonDestroyedObjects.Contains(otherObject))
+        {
+            return;
+        }
+
+        nonDestroyedObjects.Add(otherObject);
+        DontDestroyOnLoad(otherObject);
+
+    }
+
+    public void DeregisterDontDestroyOnLoad(GameObject otherGameObject)
+    {
+        if (nonDestroyedObjects.Contains(otherGameObject))
+        {
+            nonDestroyedObjects.Remove(otherGameObject);
+        }
+    }
 
 	private void Awake()
 	{
@@ -94,14 +116,21 @@ public class SceneDataManager : MonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    private static GameObject FindInactiveObjectByName(string name)
+    private GameObject FindInactiveObjectByName(string name)
     {
         // Get all root objects in the active scene
         GameObject[] rootObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+        // Find all objects marked with DontDestroyOnLoad
+        GameObject[] dontDestroyObjects = nonDestroyedObjects.ToArray();
+
+        // Combine both arrays (scene root objects and DontDestroyOnLoad objects)
+        GameObject[] allRootObjects = rootObjects.Concat(dontDestroyObjects).ToArray();
+
         Queue<GameObject> queue = new Queue<GameObject>();
 
         // Enqueue all root objects
-        foreach (GameObject rootObject in rootObjects)
+        foreach (GameObject rootObject in allRootObjects)
         {
             queue.Enqueue(rootObject);
         }

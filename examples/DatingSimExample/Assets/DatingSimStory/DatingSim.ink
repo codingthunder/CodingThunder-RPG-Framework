@@ -1,6 +1,10 @@
 INCLUDE Utilities/Initialization.ink
 INCLUDE TimeKeeper.ink
 INCLUDE Classroom.ink
+INCLUDE Utilities/CmdTunnels.ink
+INCLUDE StoryScenes/Opening.ink
+
+
 // INCLUDE Sleep.ink
 
 

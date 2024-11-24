@@ -118,6 +118,13 @@ Cmd=LoadScene:SceneName=Sleep
 Cmd=SetVar:Target=$$TimeKeeper.timeScale:Source={scale}
 ->->
 
+===HideClock===
+Cmd=Despawn:Target=$$Scene.TimeText
+->->
+
+===ShowClock===
+Cmd=Spawn:Target=$$Scene.TimeText
+->->
 
 ===InitializeTimeKeeper===
 {time_keeper_initialized: ->->}

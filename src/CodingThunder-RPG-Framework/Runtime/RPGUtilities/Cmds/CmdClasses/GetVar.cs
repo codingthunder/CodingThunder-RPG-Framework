@@ -33,8 +33,6 @@ namespace CodingThunder.RPGUtilities.Cmds
 				yield return null;
 			}
 
-
-
 			Type type = ResolveType(Parameters["Type"].Trim());
 			if (type == null)
 			{

@@ -19,6 +19,8 @@ namespace CodingThunder.RPGUtilities.RPGStory
     /// </summary>
     public class StoryRunner : MonoBehaviour
     {
+        private bool _storyStarted = false;
+
         public bool autoStart;
         public TextAsset inkAsset;
         public StoryUI storyUI;
@@ -43,7 +45,10 @@ namespace CodingThunder.RPGUtilities.RPGStory
         // Start is called before the first frame update
         void Start()
         {
-            storyUI.Hide();
+            if (!_storyStarted)
+            {
+                storyUI.Hide();
+            }
             if (autoStart)
             {
                 NewStory();
@@ -346,6 +351,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public void GoToChapter(string chapterID)
         {
+            _storyStarted = true;
             inkWrapper.JumpToChapter(chapterID);
         }
 

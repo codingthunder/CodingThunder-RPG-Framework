@@ -34,6 +34,8 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 		public float? Dist {  get; set; }
 
+		public bool? KeepGoing { get; set; }
+
 		public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
 		{
 			while (Suspended)
@@ -56,6 +58,15 @@ namespace CodingThunder.RPGUtilities.Cmds
 			{
 				Speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
 			}
+			if (KeepGoing == null)
+			{
+				KeepGoing = new RPGRef<bool>() { ReferenceId = Parameters["KeepGoing"] };
+				if (KeepGoing == null)
+				{
+					KeepGoing = false;
+				}
+			}
+
 			//float xDir = new RPGRef<float>() { ReferenceId = Parameters["X"] };
 			//float yDir = new RPGRef<float>() { ReferenceId = Parameters["Y"] };
 			//float speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
@@ -94,10 +105,14 @@ namespace CodingThunder.RPGUtilities.Cmds
 				distanceMoved =  ((Vector2) movement2D.transform.position - originalPosition).magnitude;
 			}
 
-			movement2D.m_direction = new Vector2(0, 0);
-			movement2D.m_speed = existing_speed;
+			if (!KeepGoing.Value)
+			{
+
+				movement2D.m_direction = new Vector2(0, 0);
+				movement2D.m_speed = existing_speed;
+			}
 			//movement2D.m_speed = 0f;
-			Debug.LogWarning("Completed MoveCmd.");
+			//Debug.LogWarning("Completed MoveCmd.");
 			completionCallback.Invoke(this);
 			yield break;
 		}

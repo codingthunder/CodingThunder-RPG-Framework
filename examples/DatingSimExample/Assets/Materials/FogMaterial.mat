@@ -54,10 +54,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Falloff: 9.18
-    - _FogDensity: 4.77
-    - _MaxOpacity: 1
-    - _MinOpacity: 0.3
+    - _Falloff: 0
+    - _FogDensity: 2.5
+    - _MaxOpacity: 0.45
+    - _MinOpacity: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
