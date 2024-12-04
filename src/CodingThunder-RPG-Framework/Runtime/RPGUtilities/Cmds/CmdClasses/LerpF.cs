@@ -20,10 +20,11 @@ namespace CodingThunder.RPGUtilities.Cmds
             {
                 yield return null;
             }
-
             var targetString = Parameters["Target"];
             float value = new RPGRef<float>() { ReferenceId = Parameters["Value"] };
             float dur = new RPGRef<float>() { ReferenceId = Parameters["Dur"] };
+
+            
 
             ISetVarMetadata setVarMetadata = null;
 

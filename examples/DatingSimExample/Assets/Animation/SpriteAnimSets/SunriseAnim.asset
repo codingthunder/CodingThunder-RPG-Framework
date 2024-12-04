@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8abb5ff007aa744ab10ea4101e0899, type: 3}
+  m_Name: SunriseAnim
+  m_EditorClassIdentifier: 
+  spriteAnims:
+  - animName: default
+    sprites:
+    - {fileID: 1514129016, guid: 6a6752ad5922de848bd80cc94cccd247, type: 3}
+    - {fileID: -303335200, guid: 6a6752ad5922de848bd80cc94cccd247, type: 3}
+    - {fileID: -129874413, guid: 6a6752ad5922de848bd80cc94cccd247, type: 3}
+    - {fileID: 804906367, guid: 6a6752ad5922de848bd80cc94cccd247, type: 3}
+    - {fileID: 1644943908, guid: 6a6752ad5922de848bd80cc94cccd247, type: 3}

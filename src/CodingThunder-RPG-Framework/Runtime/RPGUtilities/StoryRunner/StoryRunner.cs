@@ -155,18 +155,25 @@ namespace CodingThunder.RPGUtilities.RPGStory
             //Parse CmdSequence
             if (line.StartsWith("CmdSequence="))
             {
-                var nextLine = "";
+                var nextLine = inkWrapper.NextLine().Trim();
 
                 while (nextLine != "ENDSEQUENCE")
                 {
-                    nextLine = inkWrapper.NextLine().Trim();
+                    
+                    if (string.IsNullOrWhiteSpace(nextLine))
+                    {
+                        nextLine = inkWrapper.NextLine().Trim();
+                        continue;
+                    }
                     if (nextLine == null || !nextLine.StartsWith("Cmd="))
                     {
-                        Debug.LogError("Hey, you forgot to close your CmdSequence!");
+                        Debug.LogError("Hey, you forgot to close your CmdSequence! Here's what you printed instead: " + nextLine);
                         return;
                     }
 
                     line += "\n" + nextLine;
+
+                    nextLine = inkWrapper.NextLine().Trim();
                 }
 
                 CmdSequence block = CmdSequence.Parse(line);

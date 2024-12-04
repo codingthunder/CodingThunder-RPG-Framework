@@ -96,6 +96,9 @@ namespace CodingThunder.RPGUtilities.Cmds
 					yield return null;
 					timeSinceLastUpdate = Time.deltaTime;
 				}
+
+				//Based on what I'm seeing, this SHOULD work even if the object is a subobject of a moving object.
+				//We shall see...
 				Vector2 currentPos = targetTransform.position;
 
 				Vector2 newPos = currentPos + (moveVector * timeSinceLastUpdate);
@@ -120,13 +123,18 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <summary>
 		/// Converts an angle to a Vector2. Remember: 0 degrees = UP.
 		/// </summary>
-		/// <param name="angle">DEFAULT 0 degrees = UP</param>
+		/// <param name="angleDegrees">DEFAULT 0 degrees = UP</param>
 		/// <returns></returns>
-		public static Vector2 AngleToVector2(float angle)
+		public static Vector2 AngleToVector2(float angleDegrees)
 		{
-			float radians = (angle - 90) * Mathf.Deg2Rad;
+            float angleRadians = Mathf.Deg2Rad * angleDegrees;
 
-			return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-		}
+            // Calculate the x and y components
+            float x = Mathf.Sin(angleRadians);
+            float y = Mathf.Cos(angleRadians);
+
+            // Return the resulting Vector2 (x, y)
+            return new Vector2(x, y);
+        }
 	}
 }

@@ -29,7 +29,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <summary>
 		/// Not included in string parsing. cmdExpressions need to be added after the block is parsed.
 		/// </summary>
-		public List<CmdExpression> cmdExpressions;
+		public List<CmdExpression> cmdExpressions = new List<CmdExpression>();
 		private int stepCount;
 
 		private bool suspended = false;

@@ -215,6 +215,10 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		private void OnDestroy()
 		{
+			if (Instance != this)
+			{
+				return;
+			}
 			sceneDataManager.DeregisterDontDestroyOnLoad(gameObject);
 			SaveLoad.DeregisterSaveLoadCallbacks("Metadata");
 		}

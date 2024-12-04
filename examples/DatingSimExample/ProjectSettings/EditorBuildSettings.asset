@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DatingSimScenes/Sleep.unity
     guid: 87f1fac432b51fb4ca971f1caa432198
+  - enabled: 1
+    path: Assets/Scenes/DatingSimScenes/StoryScenes/Opening.unity
+    guid: f1bfe2a8746988647876d408e6363291
+  - enabled: 1
+    path: Assets/Scenes/DatingSimScenes/StoryScenes/Opening_2.unity
+    guid: e7608c3360277fa41947f9e227ce8b2e
   m_configObjects: {}
