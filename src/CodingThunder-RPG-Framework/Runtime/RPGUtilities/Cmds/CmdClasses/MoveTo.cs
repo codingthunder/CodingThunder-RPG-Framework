@@ -18,15 +18,18 @@ namespace CodingThunder.RPGUtilities.Cmds
         public Vector2? Position { get; set; }
         public float? Speed { get; set; }
 
+        public bool? KeepGoing { get; set; }
+
         private float distanceThreshold = 0.1f;
 
         public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
         {
+            
             while (Suspended)
             {
                 yield return null;
             }
-
+            
             if (Target == null)
             {
                 Target = new RPGRef<GameObject>() { ReferenceId = Parameters["Target"] };
@@ -38,6 +41,15 @@ namespace CodingThunder.RPGUtilities.Cmds
             if (Speed == null)
             {
                 Speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
+            }
+            if (KeepGoing == null)
+            {
+                KeepGoing = new RPGRef<bool>() { ReferenceId = Parameters["KeepGoing"] };
+
+                if (KeepGoing == null)
+                {
+                    KeepGoing = false;
+                }
             }
 
             var move2D = Target.GetComponent<Movement2D>();
@@ -65,7 +77,10 @@ namespace CodingThunder.RPGUtilities.Cmds
                 yield return new WaitForFixedUpdate();
             }
 
-            move2D.m_speed = 0f;
+            if (!KeepGoing.Value)
+            {
+                move2D.m_speed = 0f;
+            }
 
             completionCallback.Invoke(this);
             yield break;

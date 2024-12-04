@@ -23,7 +23,7 @@ namespace CodingThunder
 
         private bool sequenceRunning;
 
-        public void RunTrigger(Collider2D triggerSource)
+        public void RunTrigger()
         {
             if (!IsActive || sequenceRunning)
             {

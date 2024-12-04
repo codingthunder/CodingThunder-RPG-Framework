@@ -50,7 +50,7 @@ namespace CodingThunder
                 return;
             }
 
-            receiver.RunTrigger(GetComponent<Collider2D>());
+            receiver.RunTrigger();
         }
 
     }

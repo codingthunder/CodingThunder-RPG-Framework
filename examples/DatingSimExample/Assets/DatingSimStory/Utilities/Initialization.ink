@@ -9,6 +9,13 @@ VAR int_type = "System.Int32"
 VAR bool_type = "System.Boolean"
 VAR string_type = "System.String"
 
+//// Shortcuts for looking up long-ass names.
+//// Add them as they become necessary.
+VAR text_component = "GetComponent(\"TextMeshProUGUI\")"
+VAR image_component = "GetComponent(\"Image\")"
+VAR audio_source_component = "GetComponent(\"AudioSource\")"
+VAR light_component = "GetComponent(\"Light2D\")"
+
 //// These result variables are used with GetVar Cmd.
 //// Ink only supports a handful of data types.
 //// When you call GetVar, it'll assign one of the following variables

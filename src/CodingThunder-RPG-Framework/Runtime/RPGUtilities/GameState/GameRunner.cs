@@ -66,7 +66,7 @@ namespace CodingThunder.RPGUtilities.GameState
 			}
 			Instance = this;
 
-			DontDestroyOnLoad(gameObject);
+			// DontDestroyOnLoad(gameObject);
 
 			//Instantiating a CmdExpression during gameplay will cause the Cmd Lookup Dictionary to get filled.
 			//Figure doing it here guarantees it won't happen somewhere else when I don't want it to.
@@ -76,6 +76,8 @@ namespace CodingThunder.RPGUtilities.GameState
 			if (gameDataManager == null) gameDataManager = GetComponent<GameDataManager>();
 			if (sceneDataManager == null) sceneDataManager = GetComponent<SceneDataManager>();
 			if (storyRunner == null) storyRunner = GetComponent<StoryRunner>();
+
+			sceneDataManager.RegisterDontDestroyOnLoad(gameObject);
 
 			storyRunner.RegisterCutsceneTriggerCallback(NowInACutsceneState);
 
@@ -213,6 +215,11 @@ namespace CodingThunder.RPGUtilities.GameState
 
 		private void OnDestroy()
 		{
+			if (Instance != this)
+			{
+				return;
+			}
+			sceneDataManager.DeregisterDontDestroyOnLoad(gameObject);
 			SaveLoad.DeregisterSaveLoadCallbacks("Metadata");
 		}
 	}

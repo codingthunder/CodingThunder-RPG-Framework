@@ -213,6 +213,8 @@ namespace CodingThunder.RPGUtilities.DataManagement
 				return null;
 			}
 
+			Debug.Log(lookupId);
+
 			// Use Dynamic Expresso to evaluate the lookupId
 			object result = DynamicExpressoEvaluator.Instance.EvaluateObjectLookup(target, lookupId);
 			if (result == null)

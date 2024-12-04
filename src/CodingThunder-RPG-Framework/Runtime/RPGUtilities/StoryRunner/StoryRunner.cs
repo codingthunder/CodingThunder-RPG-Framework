@@ -19,6 +19,8 @@ namespace CodingThunder.RPGUtilities.RPGStory
     /// </summary>
     public class StoryRunner : MonoBehaviour
     {
+        private bool _storyStarted = false;
+
         public bool autoStart;
         public TextAsset inkAsset;
         public StoryUI storyUI;
@@ -43,7 +45,10 @@ namespace CodingThunder.RPGUtilities.RPGStory
         // Start is called before the first frame update
         void Start()
         {
-            storyUI.Hide();
+            if (!_storyStarted)
+            {
+                storyUI.Hide();
+            }
             if (autoStart)
             {
                 NewStory();
@@ -150,18 +155,25 @@ namespace CodingThunder.RPGUtilities.RPGStory
             //Parse CmdSequence
             if (line.StartsWith("CmdSequence="))
             {
-                var nextLine = "";
+                var nextLine = inkWrapper.NextLine().Trim();
 
                 while (nextLine != "ENDSEQUENCE")
                 {
-                    nextLine = inkWrapper.NextLine().Trim();
+                    
+                    if (string.IsNullOrWhiteSpace(nextLine))
+                    {
+                        nextLine = inkWrapper.NextLine().Trim();
+                        continue;
+                    }
                     if (nextLine == null || !nextLine.StartsWith("Cmd="))
                     {
-                        Debug.LogError("Hey, you forgot to close your CmdSequence!");
+                        Debug.LogError("Hey, you forgot to close your CmdSequence! Here's what you printed instead: " + nextLine);
                         return;
                     }
 
                     line += "\n" + nextLine;
+
+                    nextLine = inkWrapper.NextLine().Trim();
                 }
 
                 CmdSequence block = CmdSequence.Parse(line);
@@ -346,6 +358,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public void GoToChapter(string chapterID)
         {
+            _storyStarted = true;
             inkWrapper.JumpToChapter(chapterID);
         }
 

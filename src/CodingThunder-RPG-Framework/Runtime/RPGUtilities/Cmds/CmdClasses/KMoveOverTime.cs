@@ -8,6 +8,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 {
     /// <summary>
     /// Moves to a location over time. Speed is determined by duration.
+    /// Useful for moving something instantly.
     /// Use with Kinematic targets or targets without rigidbodies.
     /// Parameters["Target"] to set GameObject you'll be moving.
     /// Parameters["Position"] to set target position.
@@ -28,6 +29,11 @@ namespace CodingThunder.RPGUtilities.Cmds
 
         public IEnumerator ExecuteCmd(Action<ICmd> completionCallback)
         {
+            while (Suspended)
+            {
+                yield return null;
+            }
+
             if (Target == null)
             {
                 Target = new RPGRef<GameObject>() { ReferenceId = Parameters["Target"] };
@@ -49,9 +55,23 @@ namespace CodingThunder.RPGUtilities.Cmds
 
             var timeSinceStart = 0f;
 
-            while (timeSinceStart < Dur.Value)
+            if (Dur.Value == 0f)
+            {
+                targetTransform.position = Position.Value;
+                completionCallback.Invoke(this);
+                yield break;
+            }
+
+            while (timeSinceStart <= Dur.Value)
             {
                 yield return null;
+
+                while (Suspended)
+                {
+                    continue;
+                }
+
+                
                 timeSinceStart += Time.deltaTime;
 
                 var newPos = Vector2.Lerp(originalPosition, Position.Value, timeSinceStart / Dur.Value);

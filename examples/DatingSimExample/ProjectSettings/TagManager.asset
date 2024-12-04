@@ -50,9 +50,12 @@ TagManager:
   - name: Deco
     uniqueID: 692752801
     locked: 0
-  - name: Player
+  - name: Sorted
     uniqueID: 398817523
     locked: 0
   - name: Overhead
     uniqueID: 3100486579
+    locked: 0
+  - name: Fog
+    uniqueID: 62338859
     locked: 0
