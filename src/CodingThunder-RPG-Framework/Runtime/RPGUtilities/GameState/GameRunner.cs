@@ -38,6 +38,7 @@ namespace CodingThunder.RPGUtilities.GameState
 		private string skipToSceneOnStart;
 		[field: SerializeField]
 		public GameStateEnum GameState { get; private set; }
+
 		public event Action<GameStateEnum> OnChangeGameState;
 
 		[Header("Use this to register all the classes in a namespace to the Expression Evaluator.")]
