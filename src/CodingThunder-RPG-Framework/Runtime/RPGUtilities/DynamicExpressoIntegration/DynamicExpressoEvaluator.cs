@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Reflection;
 using CodingThunder.RPGUtilities.Mechanics;
 using System.Text.RegularExpressions;
+using CodingThunder.RPGUtilities.GameState;
 
 namespace CodingThunder.RPGUtilities.DataManagement
 {
@@ -26,6 +27,11 @@ namespace CodingThunder.RPGUtilities.DataManagement
 		private Interpreter _interpreter = new Interpreter();
 		private HashSet<Type> _registeredTypes = new HashSet<Type>();
 
+		public bool HasRegisteredType(Type type)
+		{
+			return _registeredTypes.Contains(type);
+		}
+
 		// Method to register a single type if not already registered
 		public void RegisterTypeIfNotRegistered(Type type)
 		{
@@ -33,6 +39,11 @@ namespace CodingThunder.RPGUtilities.DataManagement
 			{
 				_interpreter.Reference(type);
 				_registeredTypes.Add(type);
+				
+				if (GameRunner.Instance.debugMode)
+				{
+					Debug.Log("Registering type: " + type.Name);
+				}
 			}
 		}
 

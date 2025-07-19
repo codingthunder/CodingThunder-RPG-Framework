@@ -59,10 +59,10 @@ namespace CodingThunder.RPGUtilities.Cmds
 
 			}
 
-			foreach (var key in  cmdTypeLookup.Keys)
-			{
-				Debug.Log($"Registered command: {key}");
-			}
+			// foreach (var key in  cmdTypeLookup.Keys)
+			// {
+			// 	Debug.Log($"Registered command: {key}");
+			// }
 		}
 
 		/// <summary>

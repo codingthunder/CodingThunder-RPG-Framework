@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.codingthunder.rpgframework": {
-      "version": "file:com.codingthunder.rpgframework",
+      "version": "file:/home/jc/Repos/MyRepos/CodingThunder-RPG-Framework/src/CodingThunder-RPG-Framework",
       "depth": 0,
-      "source": "embedded",
+      "source": "local",
       "dependencies": {
         "com.github-glitchenzo.nugetforunity": "4.1.1",
         "com.unity.textmeshpro": "3.0.6",
@@ -239,6 +239,22 @@
         "com.unity.searcher": "4.9.2"
       }
     },
+    "com.unity.sysroot": {
+      "version": "2.0.10",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.sysroot.linux-x86_64": {
+      "version": "2.0.9",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.1.33",
       "depth": 0,
@@ -268,6 +284,16 @@
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.linux-x86_64": {
+      "version": "2.0.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.10",
+        "com.unity.sysroot.linux-x86_64": "2.0.9"
       },
       "url": "https://packages.unity.com"
     },
