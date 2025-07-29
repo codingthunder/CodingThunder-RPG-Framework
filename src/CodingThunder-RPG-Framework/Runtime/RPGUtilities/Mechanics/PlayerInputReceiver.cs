@@ -15,6 +15,7 @@ namespace CodingThunder.RPGUtilities.Mechanics
 		private Interactor interactor;
 
 		private float interactorDistance;
+		private bool runInputPressed;
 
 		protected override void OnAwake()
 		{
@@ -40,6 +41,12 @@ namespace CodingThunder.RPGUtilities.Mechanics
 
 			var dir = value.Get<Vector2>();
 
+			if (runInputPressed)
+			{
+				movement2D.Run2D(dir);
+				return;
+			}
+
 			movement2D.Walk2D(dir);
 
 			//Little did I know, I'd already tried to control the interactor here. Whoops. Gonna probably remove this because
@@ -49,6 +56,18 @@ namespace CodingThunder.RPGUtilities.Mechanics
 
 			////Are the parentheses overkill? Yes. Do they make it VERY clear what's happening? Also yes.
 			//interactor.transform.position = ((Vector2) transform.position) + (dir.normalized * interactorDistance);
+		}
+
+		public void OnRun2D(InputValue value)
+		{
+			if (value.isPressed)
+			{
+				runInputPressed = true;
+			}
+			else
+			{
+				runInputPressed = false;
+			}
 		}
 
 		public void OnInteract(InputValue value)
