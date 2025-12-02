@@ -21,7 +21,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <summary>
 		/// How many times to run this block? Less than zero means forever, 0 means once, start counting upward.
 		/// </summary>
-		public int repeat = 1;
+		public int repeat = 0;
 		/// <summary>
 		/// Delay each command by how many seconds? Zero or less has no delay.
 		/// </summary>

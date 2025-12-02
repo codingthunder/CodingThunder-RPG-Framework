@@ -16,12 +16,15 @@ namespace CodingThunder
         /// <param name="collision"></param>
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            Debug.Log("Interactor's OnTriggerEnter2D");
             if (collision.TryGetComponent<InteractTrigger>(out var component))
             {
+                Debug.Log("Interactor's other component is an InteractTrigger.");
                 if (!component.interactable)
                 {
                     return;
                 }
+                Debug.Log("Found an interactable InteractTrigger.");
                 receiver = component;
             }
         }
@@ -31,6 +34,7 @@ namespace CodingThunder
             if (receiver == null) { return; }
             if (collision.transform == receiver.transform)
             {
+                Debug.Log("Removing receiver from interactor.");
                 receiver = null;
             }
         }
@@ -40,13 +44,17 @@ namespace CodingThunder
         /// </summary>
         public void Interact()
         {
+            Debug.Log("Attempting to interact!");
             if (!IsActive || receiver == null)
             {
+                Debug.Log("Hey, there isn't a receiver on this interactor (or the interactor is inactive)");
+                Debug.Log("Interactor Is Active: " + IsActive);
                 return;
             }
 
             if (!receiver.interactable)
             {
+                Debug.Log("Hey, the receiver in question isn't interactable.");
                 return;
             }
 

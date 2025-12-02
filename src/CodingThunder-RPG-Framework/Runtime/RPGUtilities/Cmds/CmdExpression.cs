@@ -73,8 +73,15 @@ namespace CodingThunder.RPGUtilities.Cmds
 		/// <returns></returns>
 		public ICmd ToCmd()
 		{
-            var args = Regex.Split(expression, @"(?<!:):(?!:)")
-                .ToDictionary(
+			Debug.Log(expression);
+            var argsList = Regex.Split(expression, @"(?<!:):(?!:)");
+	            Debug.Log("List Count = " + argsList.Length);
+		            
+		            Debug.Log(argsList[0]);
+			            Debug.Log(argsList[1]);
+				            Debug.Log(Regex.Split(argsList[0], @"(?<!<)(?<!>)(?<!!)=(?!=)"));
+				            Debug.Log(Regex.Split(argsList[1], @"(?<!<)(?<!>)(?<!!)=(?!=)"));
+                var args = argsList.ToDictionary(
                     x => Regex.Split(x, @"(?<!<)(?<!>)(?<!!)=(?!=)")[0],
                     x => Regex.Split(x, @"(?<!<)(?<!>)(?<!!)=(?!=)")[1].Replace(@"::", ":") // Replace escaped colons with actual colons
                 );

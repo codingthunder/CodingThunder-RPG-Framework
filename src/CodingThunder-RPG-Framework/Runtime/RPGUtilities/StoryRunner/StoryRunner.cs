@@ -23,7 +23,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         public bool autoStart;
         public TextAsset inkAsset;
-        public StoryUI storyUI;
+        public StoryUIBase storyUI;
         InKrapper inkWrapper;
 
         string _prompt = string.Empty;
@@ -80,6 +80,13 @@ namespace CodingThunder.RPGUtilities.RPGStory
             inkWrapper.LoadStorySaveDataFromJson((string)data);
         }
 
+        public void SwapUI(StoryUIBase otherUI)
+        {
+            //Perform any graceful closure necessary here.
+            storyUI.Hide();
+            storyUI = otherUI;
+        }
+
         public object LookupStoryVariable(List<string> idChain)
         {
 
@@ -98,8 +105,10 @@ namespace CodingThunder.RPGUtilities.RPGStory
         /// <param name="line">String data from ink.</param>
         /// <param name="auto">If true, will not wait for user input on dialogue,
         /// and will continue Ink after Cmds are started, not after they finish.</param>
-        private void ReceiveNextLineFromInk(string line, bool auto)
+        private void ReceiveNextLineFromInk(string line, List<string> tags)
         {
+            var auto = tags.Contains("auto");
+            
             if (GameRunner.Instance.debugMode)
             {
                 Debug.Log($"'{line}', auto={auto}");
@@ -227,7 +236,7 @@ namespace CodingThunder.RPGUtilities.RPGStory
                 return;
             }
 
-            DisplayLine(narration, speaker, auto);
+            DisplayLine(narration, speaker, tags);
 
         }
 
@@ -333,21 +342,21 @@ namespace CodingThunder.RPGUtilities.RPGStory
         public void Next()
         {
             //Debug.Log("Storyrunner next!");
-            storyUI.Hide();
+            storyUI.Hide(); // TODO: Move the logic in this line elsewhere, likely to a UI-specific implementation.
             inkWrapper.Next();
         }
 
         //Tells ink to make a decision.
         public void MakeChoice(int choiceIndex)
         {
-            storyUI.Hide();
+            storyUI.Hide(); 
             inkWrapper.MakeChoice(choiceIndex);
         }
 
         //Tells the story
-        public void DisplayLine(string narration, string speaker, bool auto)
+        public void DisplayLine(string narration, string speaker, List<string> tags)
         {
-            storyUI.Narrate(narration, speaker, auto);
+            storyUI.Narrate(narration, speaker, tags);
         }
 
         //Displays choices.

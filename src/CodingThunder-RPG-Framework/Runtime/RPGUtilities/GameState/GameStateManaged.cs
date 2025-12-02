@@ -12,6 +12,10 @@ namespace CodingThunder.RPGUtilities.GameState
 
         private void Awake()
         {
+            if (whitelistedStates.Count == 0)
+            {
+                Debug.LogWarning($"{gameObject.name}.{this.name}: No whitelisted states found.");
+            }
             GameRunner.Instance.OnChangeGameState += OnGameStateChange;
             OnAwake();
         }

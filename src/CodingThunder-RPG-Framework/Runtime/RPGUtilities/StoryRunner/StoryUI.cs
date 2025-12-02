@@ -10,11 +10,8 @@ using CodingThunder.RPGUtilities.GameState;
 
 namespace CodingThunder.RPGUtilities.RPGStory
 {
-    public class StoryUI : MonoBehaviour
+    public class StoryUI : StoryUIBase
     {
-        public float secondsPerCharacter = 0.06f;
-        public float waitTimeOnAuto = 0.5f;
-
         public RectTransform NarrationDisplayPanel;
         public RectTransform NarrationPanel;
         public RectTransform NamePanel;
@@ -27,19 +24,28 @@ namespace CodingThunder.RPGUtilities.RPGStory
         public List<Button> ChoicesButtons;
         public RectTransform PromptPanel;
         public TextMeshProUGUI PromptText;
+        
+        public RectTransform InfoMsgPanel;
+        public TextMeshProUGUI InfoMsgText;
 
-        private void Awake()
+        public static StoryUI Instance;
+        
+        protected override void OnAwake()
         {
-            //DontDestroyOnLoad(transform.parent);
-
-            //TODO: This feels hackish. There has to be a better way to handle this.
-            //DontDestroyOnLoad(EventSystem.current);
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            
+            
         }
 
         // Start is called before the first frame update
         void Start()
         {
-
+            // SceneDataManager.Instance.RegisterDontDestroyOnLoad(gameObject);
         }
 
         // Update is called once per frame
@@ -48,13 +54,13 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
         }
 
-        public void Hide()
+        public override void Hide()
         {
             NarrationDisplayPanel.gameObject.SetActive(false);
             ChoicesPanel.gameObject.SetActive(false);
         }
 
-        public void DisplayChoices(string prompt, List<string> choices)
+        public override void DisplayChoices(string prompt, List<string> choices)
         {
             ChoicesPanel.gameObject.SetActive(true);
             if (string.IsNullOrEmpty(prompt))
@@ -89,8 +95,17 @@ namespace CodingThunder.RPGUtilities.RPGStory
             }
         }
 
-        public void Narrate(string narrationText, string nameText, bool auto)
+        public override void Narrate(string narrationText, string nameText, List<string> tags)
         {
+            if (nameText.Trim() == "Info")
+            {
+                InfoMsgText.text = narrationText;
+                InfoMsgPanel.gameObject.SetActive(true);
+                return;
+            }
+            
+            var auto = tags.Contains("auto");
+            
             nextBtn.gameObject.SetActive(false);
             NarrationDisplayPanel.gameObject.SetActive(true);
 
@@ -109,11 +124,12 @@ namespace CodingThunder.RPGUtilities.RPGStory
             StartCoroutine(NarrateOverTime(narrationText, secondsPerCharacter, auto));
         }
 
-        public void DisplayInput(string prompt)
+        public override void DisplayInput(string prompt)
         {
             throw new NotImplementedException();
         }
 
+        // TODO: Account for the fact this is gamestateManaged now...
         private IEnumerator NarrateOverTime(string text, float timeBetweenCharacters, bool auto)
         {
             var charIndex = 0;

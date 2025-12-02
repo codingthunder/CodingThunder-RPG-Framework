@@ -92,5 +92,10 @@ namespace CodingThunder.RPGUtilities.Mechanics
 			m_direction = direction;
 			m_speed = Mathf.Min(runningSpeed * direction.magnitude, runningSpeed);
 		}
+
+		public void Stop()
+		{
+			m_speed = 0;
+		}
 	}
 }

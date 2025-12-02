@@ -16,7 +16,7 @@ namespace CodingThunder.RPGUtilities.Cmds
 
         public GameObject Target { get; set; }
         public Vector2? Position { get; set; }
-        public float? Speed { get; set; }
+        public bool? Run { get; set; }
 
         public bool? KeepGoing { get; set; }
 
@@ -38,20 +38,18 @@ namespace CodingThunder.RPGUtilities.Cmds
             {
                 Position = new RPGRef<Vector2>() { ReferenceId = Parameters["Position"] };
             }
-            if (Speed == null)
+            if (Run == null && Parameters.ContainsKey("Run"))
             {
-                Speed = new RPGRef<float>() { ReferenceId = Parameters["Speed"] };
+                Run = new RPGRef<bool>() { ReferenceId = Parameters["Run"] };
             }
-            if (KeepGoing == null)
+            if (KeepGoing == null && Parameters.ContainsKey("KeepGoing"))
             {
                 KeepGoing = new RPGRef<bool>() { ReferenceId = Parameters["KeepGoing"] };
-
-                if (KeepGoing == null)
-                {
-                    KeepGoing = false;
-                }
             }
+            KeepGoing ??= false;
+            var run = Run ?? false;
 
+            
             var move2D = Target.GetComponent<Movement2D>();
 
             if (move2D == null)
@@ -64,7 +62,6 @@ namespace CodingThunder.RPGUtilities.Cmds
 
             //Slightly less computationally costly to compare sqrMagnitude vs. magnitude.
             var difference = Position.Value - (Vector2) targetTransform.position;
-            move2D.m_speed = Speed.Value;
 
             //This feels stupid, but I can't think of a better way to do it at the moment.
             while (difference.sqrMagnitude > distanceThreshold * distanceThreshold)
@@ -72,8 +69,19 @@ namespace CodingThunder.RPGUtilities.Cmds
                 difference = Position.Value - (Vector2)targetTransform.position;
                 if (difference.normalized != move2D.m_direction.normalized)
                 {
-                    move2D.m_direction = Position.Value - (Vector2)targetTransform.position;
+                    var m_direction = (Position.Value - (Vector2)targetTransform.position).normalized;
+
+                    if (run)
+                    {
+                        move2D.Run2D(m_direction);
+                    }
+                    else
+                    {
+                        move2D.Walk2D(m_direction);
+                    }
+                    
                 }
+                
                 yield return new WaitForFixedUpdate();
             }
 
@@ -82,6 +90,7 @@ namespace CodingThunder.RPGUtilities.Cmds
                 move2D.m_speed = 0f;
             }
 
+            Debug.Log("End of MoveTo Cmd.");
             completionCallback.Invoke(this);
             yield break;
         }

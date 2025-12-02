@@ -91,8 +91,7 @@ namespace CodingThunder.RPGUtilities.Cmds
                 yield return null;
                 timeSinceStart += Time.deltaTime;
             }
-
-            yield break;
+            completionCallback.Invoke(this);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace CodingThunder.RPGUtilities.RPGStory
         //Action narrate;//Why is this here again?
 
         public Action<List<Choice>> ChoiceCallback;
-        public Action<string, bool> ContinueCallback;
+        public Action<string, List<string>> ContinueCallback;
         public Action EndSceneCallback;
         public Action ContinueAsCutsceneCallback;
 
         public InKrapper(string storyText,
-            Action<string, bool> continueCallback,
+            Action<string, List<string>> continueCallback,
             Action<List<Choice>> choiceCallback,
             Action endSceneCallback,
             Action continueAsCutsceneCallback)
@@ -63,11 +63,11 @@ namespace CodingThunder.RPGUtilities.RPGStory
 
                 //If it's dialogue, will continue after a set amount of time.
                 //If it's a Cmd or Cmd Sequence, will start the Cmd but will not wait for it to finish before Continuing.
-                var auto = tags.Contains("auto");
+                // var auto = tags.Contains("auto");
 
                 //Debug.Log(lineData);
 
-                ContinueCallback(lineData, auto);
+                ContinueCallback(lineData, tags);
                 return;
             }
 
